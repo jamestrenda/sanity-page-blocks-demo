@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "sanity-page-blocks-demo",
   "private": true,
   "scripts": {
     "build": "turbo run build",
