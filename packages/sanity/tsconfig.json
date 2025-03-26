@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "Preserve",
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
+  },
+  "include": ["**/*.ts", "**/*.tsx", "../../apps/nextjs/lib/sanity/api.ts", "../../apps/nextjs/lib/sanity/client.ts"],
+  "exclude": ["node_modules"]
+}
