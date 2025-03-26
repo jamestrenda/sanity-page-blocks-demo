@@ -1,4 +1,4 @@
 import {page} from './page'
-import {tag} from './tag'
+import {home} from './singletons/settings/home'
 
-export const schemaTypes = [page, tag]
+export const schemaTypes = [home, page]

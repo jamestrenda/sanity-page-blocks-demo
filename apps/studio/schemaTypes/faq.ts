@@ -1,23 +1,20 @@
 import {defineField, defineType} from 'sanity'
 
-export const page = defineType({
-  name: 'page',
-  title: 'Page',
+export const faq = defineType({
+  name: 'faq',
+  title: 'Faq',
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'question',
+      title: 'Question',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-      },
+      name: 'answer',
+      title: 'Answer',
+      type: 'text',
       validation: (Rule) => Rule.required(),
     }),
   ],
