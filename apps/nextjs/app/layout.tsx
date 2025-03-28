@@ -1,21 +1,22 @@
+import '@repo/ui/styles.css';
+
 // import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { preconnect, prefetchDNS } from "react-dom";
-import { SanityLive } from "../lib/sanity/live";
-import { revalidatePath, revalidateTag } from "next/cache";
-import { VisualEditing } from "next-sanity";
-import { draftMode } from "next/headers";
-import { PreviewBar } from "./components/preview-bar";
+import { VisualEditing } from 'next-sanity';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { Geist, Geist_Mono } from 'next/font/google';
+import { draftMode } from 'next/headers';
+import { preconnect, prefetchDNS } from 'react-dom';
+import { SanityLive } from '../lib/sanity/live';
+import { PreviewBar } from './components/preview-bar';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 // export const metadata: Metadata = {
@@ -28,49 +29,49 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  preconnect("https://cdn.sanity.io");
-  prefetchDNS("https://cdn.sanity.io");
+  preconnect('https://cdn.sanity.io');
+  prefetchDNS('https://cdn.sanity.io');
 
   const navigation = [
     {
-      text: "Article Feed",
-      url: "#",
+      text: 'Article Feed',
+      url: '#',
     },
     {
-      text: "Article List",
-      url: "#",
+      text: 'Article List',
+      url: '#',
     },
     {
-      text: "CTA",
-      url: "#",
+      text: 'CTA',
+      url: '#',
     },
     {
-      text: "Description List",
-      url: "#",
+      text: 'Description List',
+      url: '#',
     },
     {
-      text: "FAQ",
-      url: "#",
+      text: 'FAQ',
+      url: '#',
     },
     {
-      text: "Hero",
-      url: "#",
+      text: 'Hero',
+      url: '#',
     },
     {
-      text: "Image/Text",
-      url: "#",
+      text: 'Image/Text',
+      url: '#',
     },
     {
-      text: "Logo Cloud",
-      url: "#",
+      text: 'Logo Cloud',
+      url: '#',
     },
     {
-      text: "Media Block",
-      url: "#",
+      text: 'Media Block',
+      url: '#',
     },
     {
-      text: "Text Block",
-      url: "#",
+      text: 'Text Block',
+      url: '#',
     },
   ];
 
@@ -79,15 +80,15 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="grid grid-rows-[auto_1fr_auto] min-h-screen p-8 gap-4 font-[family-name:var(--font-geist-sans)]">
-          <header className="py-8 flex items-center justify-center">
+        <div className="grid min-h-screen grid-rows-[auto_1fr_auto] gap-4 p-8 font-[family-name:var(--font-geist-sans)]">
+          <header className="flex items-center justify-center py-8">
             <nav>
               <ul className="flex flex-wrap justify-center gap-3">
                 {navigation.map((item, index) => (
                   <li key={index}>
                     <a
                       href={item.url}
-                      className="block text-sm font-semibold text-foreground py-3 px-6 rounded-md bg-zinc-100 dark:bg-zinc-900"
+                      className="block rounded-md bg-zinc-100 px-6 py-3 text-sm font-semibold text-foreground dark:bg-zinc-900"
                     >
                       {item.text}
                     </a>
@@ -99,18 +100,18 @@ export default async function RootLayout({
           {/* <Suspense fallback={<NavbarSkeleton />}>
           <NavbarServer />
         </Suspense> */}
-          <main className="flex flex-col gap-8 row-start-2">
+          <main className="row-start-2 flex flex-col gap-8">
             {(await draftMode()).isEnabled ? (
               <>
                 {children}
                 <VisualEditing
                   refresh={async (payload) => {
-                    "use server";
-                    if (payload.source === "manual") {
-                      revalidatePath("/", "layout");
+                    'use server';
+                    if (payload.source === 'manual') {
+                      revalidatePath('/', 'layout');
                       return;
                     }
-                    const id = payload?.document?._id?.startsWith("drafts.")
+                    const id = payload?.document?._id?.startsWith('drafts.')
                       ? payload?.document?._id.slice(7)
                       : payload?.document?._id;
                     const slug = payload?.document?.slug?.current;
@@ -129,10 +130,10 @@ export default async function RootLayout({
           <FooterServer />
         </Suspense> */}
           </main>
-          <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center py-8">
-            <p className=" text-sm font-semibold">
+          <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px] py-8">
+            <p className="text-sm font-semibold">
               <a
-                className="flex text-foreground  py-3 px-6 rounded-md bg-zinc-100 dark:bg-zinc-900"
+                className="flex rounded-md bg-zinc-100 px-6 py-3 text-foreground dark:bg-zinc-900"
                 href="https://github.com/jamestrenda/sanity-page-blocks-demo"
               >
                 View Repo
