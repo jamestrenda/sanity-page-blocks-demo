@@ -5,6 +5,7 @@ import {Icon as HomeSettingsIcon} from '../schemaTypes/singletons/settings/home'
 import {Icon as PageIcon} from '../schemaTypes/page'
 import {HomeIcon, SettingsIcon} from 'lucide-react'
 import {apiVersion} from '../sanity.config'
+import {icon as MenuIcon} from '../schemaTypes/menu'
 
 export const structure: StructureResolver = async (S, context) => {
   const homeSettings = S.defaultDocument({
@@ -51,45 +52,15 @@ export const structure: StructureResolver = async (S, context) => {
     .title('Settings')
     .icon(SettingsIcon)
     .child(
-      S.list().title('Settings').items([
-        homeSettingsListItem,
-        // S.divider(),
-        // S.listItem()
-        //   .title('Header')
-        //   .icon(HeaderIcon)
-        //   .child(
-        //     S.defaultDocument({
-        //       schemaType: 'headerSettings',
-        //       documentId: 'headerSettings',
-        //     }).title('Header Settings'),
-        //   ),
-        // S.listItem()
-        //   .title('Footer')
-        //   .schemaType('post')
-        //   .icon(FooterIcon)
-        //   .child(
-        //     S.defaultDocument({
-        //       schemaType: 'footerSettings',
-        //       documentId: 'footerSettings',
-        //     }).title('Footer Settings'),
-        //   ),
-        // S.listItem()
-        //   .title('Menus')
-        //   .icon(MenuIcon)
-        //   .child(S.documentTypeList('menu').title('Menus')),
-        // S.divider(),
-        // redirects,
-        // S.listItem()
-        //   .title('404 - Not Found')
-        //   .id('404')
-        //   .icon(FileXIcon)
-        //   .child(
-        //     S.defaultDocument({
-        //       schemaType: 'notFoundSettings',
-        //       documentId: 'notFoundSettings',
-        //     }).title('404 Settings'),
-        //   ),
-      ]),
+      S.list()
+        .title('Settings')
+        .items([
+          homeSettingsListItem,
+          S.listItem()
+            .title('Menus')
+            .icon(MenuIcon)
+            .child(S.documentTypeList('menu').title('Menus')),
+        ]),
     )
 
   // Dynamically decide whether to show the home item and divider

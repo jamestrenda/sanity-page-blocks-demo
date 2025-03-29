@@ -1,6 +1,8 @@
+import {ReactNode} from 'react'
 import {Observable} from 'rxjs'
 import {DocumentStore, PortableTextBlock, PortableTextTextBlock} from 'sanity'
 import {home} from '../schemaTypes/singletons/settings/home'
+import {PreviewValue} from 'sanity'
 
 export function getPortableTextPreview(
   value: PortableTextBlock[],
@@ -52,4 +54,20 @@ export function listenToQuery<T>(
   params: Record<string, any> = {},
 ): Observable<T> {
   return documentStore.listenQuery(query, params, {}) as Observable<T>
+}
+
+export const getPreivewOutput = ({
+  title,
+  subtitle,
+  media,
+}: {
+  title: string
+  subtitle?: string
+  media?: ReactNode
+}): PreviewValue => {
+  return {
+    title,
+    subtitle,
+    media,
+  }
 }
