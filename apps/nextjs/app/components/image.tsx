@@ -1,20 +1,20 @@
-import { getImageDimensions } from "@sanity/asset-utils";
-import { cn } from "@repo/utils";
-import Image, { type ImageProps as NextImageProps } from "next/image";
+import { cn } from '@repo/utils';
+import { getImageDimensions } from '@sanity/asset-utils';
+import Image, { type ImageProps as NextImageProps } from 'next/image';
 
-import { SanityImageProps } from "../../types";
-import { urlFor } from "../../lib/sanity/client";
+import { urlFor } from '../../lib/sanity/client';
+import { SanityImageProps } from '../../types';
 
 type ImageProps = {
   asset: SanityImageProps;
   alt?: string;
-} & Omit<NextImageProps, "alt" | "src">;
+} & Omit<NextImageProps, 'alt' | 'src'>;
 
 function getBlurDataURL(asset: SanityImageProps) {
   if (asset?.blurData) {
     return {
       blurDataURL: asset.blurData,
-      placeholder: "blur" as const,
+      placeholder: 'blur' as const,
     };
   }
   return {};
@@ -36,17 +36,17 @@ export function SanityImage({
   const url = urlFor({ ...asset, _id: asset?.asset?._ref })
     .size(
       Number(width ?? dimensions.width),
-      Number(height ?? dimensions.height)
+      Number(height ?? dimensions.height),
     )
     .dpr(2)
-    .auto("format")
+    .auto('format')
     .quality(Number(quality))
     .url();
 
   // Base image props
   const imageProps = {
-    alt: alt ?? asset.alt ?? "Image",
-    "aria-label": alt ?? asset.alt ?? "Image",
+    alt: alt ?? asset.alt ?? 'Image',
+    'aria-label': alt ?? asset.alt ?? 'Image',
     src: url,
     className: cn(className),
     // Optimize image sizes for performance and LCP
@@ -58,7 +58,7 @@ export function SanityImage({
     // - Small desktop (<1200px): Image takes up 33% of viewport width
     // - Large desktop (>1200px): Image takes up 25% of viewport width
     sizes:
-      "(max-width: 640px) 75vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw",
+      '(max-width: 640px) 75vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw',
     ...getBlurDataURL(asset),
     ...props,
   };

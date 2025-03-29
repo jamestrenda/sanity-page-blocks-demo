@@ -24,7 +24,11 @@ export default defineConfig({
       text: {
         type: 'string',
       },
-      actions: false,
+      actions: {
+        internal: {
+          types: [{type: 'page'}],
+        },
+      },
     }),
     textBlock(),
   ],

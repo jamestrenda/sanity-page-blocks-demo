@@ -9,7 +9,9 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "deploy-graphql": "sanity graphql deploy",
+    "extract-schema": "pnpm dlx sanity@latest schema extract --path=../../packages/sanity/schema.json",
+    "typegen": "pnpm dlx sanity typegen generate"
   },
   "keywords": [
     "sanity"

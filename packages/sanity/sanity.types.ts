@@ -39,28 +39,6 @@ export type SanityImageDimensions = {
   aspectRatio?: number
 }
 
-export type SanityFileAsset = {
-  _id: string
-  _type: 'sanity.fileAsset'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  originalFilename?: string
-  label?: string
-  title?: string
-  description?: string
-  altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
-  uploadId?: string
-  path?: string
-  url?: string
-  source?: SanityAssetSourceData
-}
-
 export type Geopoint = {
   _type: 'geopoint'
   lat?: number
@@ -80,30 +58,6 @@ export type HomeSettings = {
     _weak?: boolean
     [internalGroqTypeReferenceTo]?: 'page'
   }
-}
-
-export type Page = {
-  _id: string
-  _type: 'page'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
-  blocks?: Array<
-    | ({
-        _key: string
-      } & HeroBlock)
-    | ({
-        _key: string
-      } & TextBlock)
-  >
-}
-
-export type Slug = {
-  _type: 'slug'
-  current?: string
-  source?: string
 }
 
 export type TextBlock = {
@@ -131,17 +85,121 @@ export type TextBlock = {
 export type HeroBlock = {
   _type: 'heroBlock'
   text?: string
-  image?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+  customImage?: {
+    image?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
     }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
+    altText?: string
   }
+  actions?: Array<{
+    action?: {
+      text?: string
+      to?: Array<
+        | {
+            link?: {
+              document?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'page'
+              }
+            }
+            anchor?: string
+            params?: Array<{
+              key?: string
+              value?: string
+              _key: string
+            }>
+            _type: 'internal'
+            _key: string
+          }
+        | {
+            link?: {
+              url?: string
+              newWindow?: boolean
+            }
+            _type: 'external'
+            _key: string
+          }
+        | {
+            url?: string
+            _type: 'relative'
+            _key: string
+          }
+        | {
+            link?: {
+              file?: {
+                asset?: {
+                  _ref: string
+                  _type: 'reference'
+                  _weak?: boolean
+                  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+                }
+                _type: 'file'
+              }
+            }
+            _type: 'media'
+            _key: string
+          }
+      >
+    }
+    _type: 'action'
+    _key: string
+  }>
+}
+
+export type Page = {
+  _id: string
+  _type: 'page'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  blocks?: Array<
+    | ({
+        _key: string
+      } & HeroBlock)
+    | ({
+        _key: string
+      } & TextBlock)
+  >
+}
+
+export type SanityFileAsset = {
+  _id: string
+  _type: 'sanity.fileAsset'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  originalFilename?: string
+  label?: string
+  title?: string
+  description?: string
+  altText?: string
+  sha1hash?: string
+  extension?: string
+  mimeType?: string
+  size?: number
+  assetId?: string
+  uploadId?: string
+  path?: string
+  url?: string
+  source?: SanityAssetSourceData
+}
+
+export type Slug = {
+  _type: 'slug'
+  current?: string
+  source?: string
 }
 
 export type SanityImageCrop = {
@@ -205,13 +263,13 @@ export type AllSanitySchemaTypes =
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
-  | SanityFileAsset
   | Geopoint
   | HomeSettings
-  | Page
-  | Slug
   | TextBlock
   | HeroBlock
+  | Page
+  | SanityFileAsset
+  | Slug
   | SanityImageCrop
   | SanityImageHotspot
   | SanityImageAsset
@@ -220,8 +278,8 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ../../packages/sanity/queries.ts
 // Variable: INDEX_QUERY
-// Query: *[_id == "homeSettings"][0].homepage-> {    _id,    _type,    "slug": coalesce(slug.current, ""),    blocks[] {        ...,  _type,    _type == "heroBlock" => {    ...,      image {    ...,    "alt": coalesce(asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  }  }    },  }
-export type INDEX_QUERYResult = null | {
+// Query: *[_id == "homeSettings"][0].homepage-> {    _id,    _type,    "slug": coalesce(slug.current, ""),    blocks[] {        ...,  _type,    _type == "heroBlock" => {    ...,      "image": customImage.image {    ...,    "alt": coalesce(asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    ...action {      text,      "text": select(        defined(text) => { text },        to[0]._type == "internal" => {          to[0].link.document->_type == "page" => {            "text": to[0].link.document->title          }        },        {          text        }      ).text,      ...select(        to[0]._type == "internal" => {          to[0].link.document->_type == "page" => {            "url": coalesce(to[0].link.document->slug.current  +                 select(defined(to[0].params) => "?" + array::join(to[0].params[]{"param": key + "=" + value}.param, "&")              )              + select(                defined(to[0].anchor) => '#' + to[0].anchor, ''              ), to[0].link.document->slug.current, '#')          }        },        to[0]._type == "external" => {          "url": to[0].link.url,          newWindow        },        to[0]._type == "relative" => {          "url": to[0].url,        },        {          url        }      )    }  }  }    },  }
+export type INDEX_QUERYResult = {
   _id: string
   _type: 'page'
   slug: string | ''
@@ -230,6 +288,56 @@ export type INDEX_QUERYResult = null | {
         _key: string
         _type: 'heroBlock'
         text?: string
+        customImage?: {
+          image?: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+          }
+          altText?: string
+        }
+        actions: Array<
+          | {
+              _type: 'action'
+              _key: string
+              text: null | string
+              url: null | string
+              newWindow: null
+            }
+          | {
+              _type: 'action'
+              _key: string
+              text: null | string
+              url: null
+            }
+          | {
+              _type: 'action'
+              _key: string
+              text: null | string
+              url: null | string
+            }
+          | {
+              _type: 'action'
+              _key: string
+              text: null | string
+              url: string | '#'
+            }
+          | {
+              _type: 'action'
+              _key: string
+              text: null | string
+            }
+          | {
+              _type: 'action'
+              _key: string
+            }
+        > | null
         image: {
           asset?: {
             _ref: string
@@ -268,12 +376,12 @@ export type INDEX_QUERYResult = null | {
         }>
       }
   > | null
-}
+} | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_id == "homeSettings"][0].homepage-> {\n    _id,\n    _type,\n    "slug": coalesce(slug.current, ""),\n    blocks[] {\n      \n  ...,\n  _type,\n  \n  _type == "heroBlock" => {\n    ...,\n    \n  image {\n    ...,\n    "alt": coalesce(asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n\n  }\n\n\n    },\n  }': INDEX_QUERYResult
+    '*[_id == "homeSettings"][0].homepage-> {\n    _id,\n    _type,\n    "slug": coalesce(slug.current, ""),\n    blocks[] {\n      \n  ...,\n  _type,\n  \n  _type == "heroBlock" => {\n    ...,\n    \n  "image": customImage.image {\n    ...,\n    "alt": coalesce(asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    ...action {\n      text,\n      "text": select(\n        defined(text) => { text },\n        to[0]._type == "internal" => {\n          to[0].link.document->_type == "page" => {\n            "text": to[0].link.document->title\n          }\n        },\n        {\n          text\n        }\n      ).text,\n      ...select(\n        to[0]._type == "internal" => {\n          to[0].link.document->_type == "page" => {\n            "url": coalesce(to[0].link.document->slug.current  + \n                select(defined(to[0].params) => "?" + array::join(to[0].params[]{"param": key + "=" + value}.param, "&")\n              )\n              + select(\n                defined(to[0].anchor) => \'#\' + to[0].anchor, \'\'\n              ), to[0].link.document->slug.current, \'#\')\n          }\n        },\n        to[0]._type == "external" => {\n          "url": to[0].link.url,\n          newWindow\n        },\n        to[0]._type == "relative" => {\n          "url": to[0].url,\n        },\n        {\n          url\n        }\n      )\n    }\n  }\n\n  }\n\n\n    },\n  }': INDEX_QUERYResult
   }
 }
