@@ -1,4 +1,5 @@
 import { ToggleGroup, ToggleGroupItem } from '@repo/ui/components/toggle-group';
+import { cn } from '@repo/utils';
 import { ImageIcon, MousePointerClickIcon, TextIcon } from 'lucide-react';
 import { useState } from 'react';
 import { BlocksType } from '../../types';
@@ -21,14 +22,21 @@ export const Hero = ({ text, image }: HeroBlockProps) => {
     <div className="relative isolate grid h-full min-h-[600px] w-full place-items-center overflow-hidden rounded-md bg-zinc-100 p-3 dark:bg-zinc-900">
       {/* <PortableText value={text} /> */}
       <div>
-        <h1 className="text-5xl font-bold text-foreground">{text}</h1>
+        <h1
+          className={cn(
+            'text-5xl font-bold',
+            showImage ? 'text-background' : 'text-foreground',
+          )}
+        >
+          {text}
+        </h1>
         {image && showImage && (
           <div className="absolute inset-0 -z-1 aspect-video w-full bg-black">
             <SanityImage
               asset={image}
               loading="eager"
-              width={1024}
-              height={800}
+              width={1600}
+              height={900}
               priority
               quality={80}
               className="h-full w-full rounded-md object-cover opacity-80"

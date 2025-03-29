@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "@trenda/sanity-plugin-page-blocks": {
-      "signature": "e796637f491c985c86eb1a67390803f8",
-      "pure": true
-    }
-  }
-}
