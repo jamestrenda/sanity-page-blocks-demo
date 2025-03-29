@@ -1,9 +1,10 @@
-import { Button } from '@repo/ui/components/button';
+import { BlocksType } from '@repo/sanity/types';
+
 import { ToggleGroup, ToggleGroupItem } from '@repo/ui/components/toggle-group';
 import { cn } from '@repo/utils';
 import { ImageIcon, MousePointerClickIcon, TextIcon } from 'lucide-react';
 import { useState } from 'react';
-import { BlocksType } from '../../types';
+import { Actions } from './action';
 import { SanityImage } from './image';
 
 type HeroBlockProps = BlocksType<'heroBlock'>;
@@ -22,7 +23,7 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
   return (
     <div className="relative isolate grid min-h-[var(--height)] w-full place-items-center overflow-hidden rounded-md bg-zinc-100 p-3 [--height:600px] lg:aspect-video lg:max-h-[var(--height)] lg:min-h-auto dark:bg-zinc-900">
       {/* <PortableText value={text} /> */}
-      <div className="space-y-4">
+      <div className="space-y-6">
         <h1
           className={cn(
             'text-5xl font-bold',
@@ -40,28 +41,12 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
               height={900}
               priority
               quality={100}
+              alt={image.altText}
               className="h-full w-full rounded-md object-cover opacity-80"
             />
           </div>
         )}
-        {actions && showActions && (
-          <div className="flex items-center justify-center space-x-2">
-            {actions.map((action) => (
-              <Button
-                key={action._key}
-                {...action}
-                className={cn(
-                  showImage
-                    ? 'bg-background text-foreground hover:text-primary-foreground'
-                    : 'bg-foreground',
-                )}
-              >
-                {/* @ts-ignore */}
-                {action.text}
-              </Button>
-            ))}
-          </div>
-        )}
+        {actions && showActions && <Actions actions={actions} />}
       </div>
       <div className="absolute top-4 right-4 z-1">
         <ToggleGroup

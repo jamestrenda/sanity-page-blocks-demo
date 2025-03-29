@@ -12,7 +12,7 @@ const imageFragment = /* groq */ `
 const customImageFragment = /* groq */ `
   "image": customImage.image {
     ...,
-    "alt": coalesce(asset->altText, asset->originalFilename, "Image-Broken"),
+    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),
     "blurData": asset->metadata.lqip,
     "dominantColor": asset->metadata.palette.dominant.background,
   }
@@ -22,55 +22,54 @@ const actionsFragment = /* groq */ `
   actions[] {
     _type,
     _key,
-    ...action {
-      text,
-      "text": select(
-        defined(text) => { text },
-        to[0]._type == "internal" => {
-          to[0].link.document->_type == "page" => {
-            "text": to[0].link.document->title
-          }
-        },
-        {
-          text
+    "text": select(
+      defined(action.text) => {
+        "text": action.text,
+      },
+      action.to[0]._type == "internal" => {
+        action.to[0].link.document->_type == "page" => {
+          "text": action.to[0].link.document->title
         }
-      ).text,
-      ...select(
-        to[0]._type == "internal" => {
-          to[0].link.document->_type == "page" => {
-            "url": coalesce(to[0].link.document->slug.current  + 
-                select(defined(to[0].params) => "?" + array::join(to[0].params[]{"param": key + "=" + value}.param, "&")
-              )
-              + select(
-                defined(to[0].anchor) => '#' + to[0].anchor, ''
-              ), to[0].link.document->slug.current, '#')
-          }
-        },
-        to[0]._type == "external" => {
-          "url": to[0].link.url,
-          newWindow
-        },
-        to[0]._type == "relative" => {
-          "url": to[0].url,
-        },
-        {
-          url
+      },
+    ).text,
+    "url": select(
+      action.to[0]._type == "internal" => {
+        action.to[0].link.document->_type == "page" => {
+          "url":
+          coalesce(action.to[0].link.document->slug.current  + 
+            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")
+          )
+          + select(
+            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''
+          ), action.to[0].link.document->slug.current, '#')
         }
-      )
-    }
+      }.url,
+      action.to[0]._type == "external" => {
+        "url": action.to[0].link.url,
+        newWindow
+      }.url,
+      action.to[0]._type == "relative" => {
+        "url": action.to[0].url,
+      }.url
+    ),
+    "newWindow": select(action.to[0]._type == "external" => {
+      "newWindow": action.to[0].link.newWindow
+    }).newWindow,
   }
 `
 
 const heroBlock = /* groq */ `
   _type == "heroBlock" => {
-    ...,
+    _type,
+    _type,
+    text,
     ${customImageFragment},
     ${actionsFragment}
   }
 `
 
 const blocksFragment = /* groq */ `
-  ...,
+  _key,
   _type,
   ${heroBlock}
 `

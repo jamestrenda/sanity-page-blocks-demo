@@ -2,8 +2,8 @@ import { cn } from '@repo/utils';
 import { getImageDimensions } from '@sanity/asset-utils';
 import Image, { type ImageProps as NextImageProps } from 'next/image';
 
+import { SanityImageProps } from '@repo/sanity/types';
 import { urlFor } from '../../lib/sanity/client';
-import { SanityImageProps } from '../../types';
 
 type ImageProps = {
   asset: SanityImageProps;

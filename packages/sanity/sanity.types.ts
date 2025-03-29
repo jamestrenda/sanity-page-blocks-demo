@@ -278,7 +278,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ../../packages/sanity/queries.ts
 // Variable: INDEX_QUERY
-// Query: *[_id == "homeSettings"][0].homepage-> {    _id,    _type,    "slug": coalesce(slug.current, ""),    blocks[] {        ...,  _type,    _type == "heroBlock" => {    ...,      "image": customImage.image {    ...,    "alt": coalesce(asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    ...action {      text,      "text": select(        defined(text) => { text },        to[0]._type == "internal" => {          to[0].link.document->_type == "page" => {            "text": to[0].link.document->title          }        },        {          text        }      ).text,      ...select(        to[0]._type == "internal" => {          to[0].link.document->_type == "page" => {            "url": coalesce(to[0].link.document->slug.current  +                 select(defined(to[0].params) => "?" + array::join(to[0].params[]{"param": key + "=" + value}.param, "&")              )              + select(                defined(to[0].anchor) => '#' + to[0].anchor, ''              ), to[0].link.document->slug.current, '#')          }        },        to[0]._type == "external" => {          "url": to[0].link.url,          newWindow        },        to[0]._type == "relative" => {          "url": to[0].url,        },        {          url        }      )    }  }  }    },  }
+// Query: *[_id == "homeSettings"][0].homepage-> {    _id,    _type,    "slug": coalesce(slug.current, ""),    blocks[] {        _key,  _type,    _type == "heroBlock" => {    _type,    _type,    text,      "image": customImage.image {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url    ),    "newWindow": select(action.to[0]._type == "external" => {      "newWindow": action.to[0].link.newWindow    }).newWindow,  }  }    },  }
 export type INDEX_QUERYResult = {
   _id: string
   _type: 'page'
@@ -287,57 +287,7 @@ export type INDEX_QUERYResult = {
     | {
         _key: string
         _type: 'heroBlock'
-        text?: string
-        customImage?: {
-          image?: {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-            }
-            hotspot?: SanityImageHotspot
-            crop?: SanityImageCrop
-            _type: 'image'
-          }
-          altText?: string
-        }
-        actions: Array<
-          | {
-              _type: 'action'
-              _key: string
-              text: null | string
-              url: null | string
-              newWindow: null
-            }
-          | {
-              _type: 'action'
-              _key: string
-              text: null | string
-              url: null
-            }
-          | {
-              _type: 'action'
-              _key: string
-              text: null | string
-              url: null | string
-            }
-          | {
-              _type: 'action'
-              _key: string
-              text: null | string
-              url: string | '#'
-            }
-          | {
-              _type: 'action'
-              _key: string
-              text: null | string
-            }
-          | {
-              _type: 'action'
-              _key: string
-            }
-        > | null
+        text: string | null
         image: {
           asset?: {
             _ref: string
@@ -348,32 +298,21 @@ export type INDEX_QUERYResult = {
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
           _type: 'image'
-          alt: string | 'Image-Broken'
+          altText: string | 'Image-Broken'
           blurData: string | null
           dominantColor: string | null
         } | null
+        actions: Array<{
+          _type: 'action'
+          _key: string
+          text: null | string
+          url: null | string | '#'
+          newWindow: boolean | null
+        }> | null
       }
     | {
         _key: string
         _type: 'textBlock'
-        text?: Array<{
-          children?: Array<{
-            marks?: Array<string>
-            text?: string
-            _type: 'span'
-            _key: string
-          }>
-          style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
-          listItem?: 'bullet' | 'number'
-          markDefs?: Array<{
-            href?: string
-            _type: 'link'
-            _key: string
-          }>
-          level?: number
-          _type: 'block'
-          _key: string
-        }>
       }
   > | null
 } | null
@@ -382,6 +321,6 @@ export type INDEX_QUERYResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_id == "homeSettings"][0].homepage-> {\n    _id,\n    _type,\n    "slug": coalesce(slug.current, ""),\n    blocks[] {\n      \n  ...,\n  _type,\n  \n  _type == "heroBlock" => {\n    ...,\n    \n  "image": customImage.image {\n    ...,\n    "alt": coalesce(asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    ...action {\n      text,\n      "text": select(\n        defined(text) => { text },\n        to[0]._type == "internal" => {\n          to[0].link.document->_type == "page" => {\n            "text": to[0].link.document->title\n          }\n        },\n        {\n          text\n        }\n      ).text,\n      ...select(\n        to[0]._type == "internal" => {\n          to[0].link.document->_type == "page" => {\n            "url": coalesce(to[0].link.document->slug.current  + \n                select(defined(to[0].params) => "?" + array::join(to[0].params[]{"param": key + "=" + value}.param, "&")\n              )\n              + select(\n                defined(to[0].anchor) => \'#\' + to[0].anchor, \'\'\n              ), to[0].link.document->slug.current, \'#\')\n          }\n        },\n        to[0]._type == "external" => {\n          "url": to[0].link.url,\n          newWindow\n        },\n        to[0]._type == "relative" => {\n          "url": to[0].url,\n        },\n        {\n          url\n        }\n      )\n    }\n  }\n\n  }\n\n\n    },\n  }': INDEX_QUERYResult
+    '*[_id == "homeSettings"][0].homepage-> {\n    _id,\n    _type,\n    "slug": coalesce(slug.current, ""),\n    blocks[] {\n      \n  _key,\n  _type,\n  \n  _type == "heroBlock" => {\n    _type,\n    _type,\n    text,\n    \n  "image": customImage.image {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url\n    ),\n    "newWindow": select(action.to[0]._type == "external" => {\n      "newWindow": action.to[0].link.newWindow\n    }).newWindow,\n  }\n\n  }\n\n\n    },\n  }': INDEX_QUERYResult
   }
 }
