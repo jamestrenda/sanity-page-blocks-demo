@@ -1,16 +1,17 @@
-import Link from "next/link";
+import { Overline } from '@repo/ui/components/overline';
 import {
   PortableText as PortableTextInternal,
   type PortableTextBlock,
   type PortableTextReactComponents,
-} from "next-sanity";
+} from 'next-sanity';
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
     normal: ({ children }) => <p>{children}</p>,
     h1: ({ children, value }) => {
-      return <h1 className="text-foreground font-bold text-5xl">{children}</h1>;
+      return <h1 className="text-5xl font-bold text-foreground">{children}</h1>;
     },
+    overline: ({ children }) => <Overline>{children}</Overline>,
     //     h2: ({ children, value }) => {
     //       const slug = parseChildrenToSlug(value.children);
     //       return (
@@ -126,13 +127,14 @@ export function PortableText<T>({
     //     className,
     //   )}
     // >
-    <PortableTextInternal
-      value={value as unknown as PortableTextBlock[]}
-      components={components}
-      onMissingComponent={(_, { nodeType, type }) =>
-        console.log("missing component", nodeType, type)
-      }
-    />
-    // {/* </div> */}
+    <div className={className}>
+      <PortableTextInternal
+        value={value as unknown as PortableTextBlock[]}
+        components={components}
+        onMissingComponent={(_, { nodeType, type }) =>
+          console.log('missing component', nodeType, type)
+        }
+      />
+    </div>
   );
 }

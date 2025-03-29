@@ -1,14 +1,14 @@
-"use client";
-import { useOptimistic } from "@sanity/visual-editing/react";
-import { createDataAttribute, type SanityDocument } from "next-sanity";
-import type { ComponentType } from "react";
+'use client';
+import { useOptimistic } from '@sanity/visual-editing/react';
+import { createDataAttribute, type SanityDocument } from 'next-sanity';
+import type { ComponentType } from 'react';
 
-import { Hero } from "./hero";
-import { dataset, projectId, studioUrl } from "../../lib/sanity/api";
-import { INDEX_QUERYResult } from "@repo/sanity/sanity.types";
-import { BlocksType } from "../../types";
+import { INDEX_QUERYResult } from '@repo/sanity/sanity.types';
+import { BlocksType } from '@repo/sanity/types';
+import { dataset, projectId, studioUrl } from '../../lib/sanity/api';
+import { Hero } from './hero';
 
-type Block = NonNullable<NonNullable<INDEX_QUERYResult>["blocks"]>[number];
+type Block = NonNullable<NonNullable<INDEX_QUERYResult>['blocks']>[number];
 
 export type Props = {
   blocks: Block[];
@@ -38,7 +38,7 @@ export function Blocks({ blocks: initial = [], _id, _type }: Props) {
       }
 
       return currentBlocks;
-    }
+    },
   );
 
   return (
@@ -50,7 +50,7 @@ export function Blocks({ blocks: initial = [], _id, _type }: Props) {
         projectId: projectId,
         dataset: dataset,
         type: _type,
-        path: "blocks",
+        path: 'blocks',
       }).toString()}
     >
       {blocks.map((block) => {
@@ -62,7 +62,7 @@ export function Blocks({ blocks: initial = [], _id, _type }: Props) {
           return (
             <div
               key={`${block._type}-${block._key}`}
-              className="flex items-center justify-center p-8 text-center text-muted-foreground bg-muted rounded-lg"
+              className="flex items-center justify-center rounded-lg bg-muted p-8 text-center text-muted-foreground"
             >
               Component not found for block type: <code>{block._type}</code>
             </div>
