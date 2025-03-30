@@ -11,16 +11,16 @@ export default {
   fields: [
     defineField({
       name: 'title',
-      title: 'Menu Title',
+      title: 'Title',
       type: 'string',
     }),
     defineField({
-      name: 'items',
-      title: 'Menu Items',
+      name: 'actions',
+      title: 'Actions',
       type: 'array',
       of: [
         {
-          type: 'menuItem',
+          type: 'action',
         },
       ],
       validation: (Rule) => [Rule.min(1)],

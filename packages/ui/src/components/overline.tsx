@@ -7,7 +7,7 @@ export const Overline = ({ children, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'pt-overline w-fit rounded-full bg-white px-3 py-1 text-sm font-semibold tracking-wider text-primary uppercase',
+        'pt-overline w-fit rounded-full bg-white px-4 py-1.5 text-sm font-semibold tracking-wider text-primary',
         className,
       )}
     >

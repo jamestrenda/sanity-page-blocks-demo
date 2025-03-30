@@ -1,7 +1,7 @@
-import {Settings2Icon} from 'lucide-react'
+import {HousePlusIcon} from 'lucide-react'
 import {defineField, defineType} from 'sanity'
 
-export const Icon = Settings2Icon
+export const Icon = HousePlusIcon
 
 export const home = defineType({
   name: 'homeSettings',

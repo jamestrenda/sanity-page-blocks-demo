@@ -8,6 +8,7 @@ import { draftMode } from 'next/headers';
 import { preconnect, prefetchDNS } from 'react-dom';
 import { SanityLive } from '../lib/sanity/live';
 import { PreviewBar } from './components/preview-bar';
+import { Header } from './header';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,74 +33,13 @@ export default async function RootLayout({
   preconnect('https://cdn.sanity.io');
   prefetchDNS('https://cdn.sanity.io');
 
-  const navigation = [
-    {
-      text: 'Article Feed',
-      url: '#',
-    },
-    {
-      text: 'Article List',
-      url: '#',
-    },
-    {
-      text: 'CTA',
-      url: '#',
-    },
-    {
-      text: 'Description List',
-      url: '#',
-    },
-    {
-      text: 'FAQ',
-      url: '#',
-    },
-    {
-      text: 'Hero',
-      url: '#',
-    },
-    {
-      text: 'Image/Text',
-      url: '#',
-    },
-    {
-      text: 'Logo Cloud',
-      url: '#',
-    },
-    {
-      text: 'Media Block',
-      url: '#',
-    },
-    {
-      text: 'Text Block',
-      url: '#',
-    },
-  ];
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="grid min-h-screen grid-rows-[auto_1fr_auto] gap-4 p-8 font-[family-name:var(--font-geist-sans)]">
-          <header className="flex items-center justify-center py-8">
-            <nav>
-              <ul className="flex flex-wrap justify-center gap-3">
-                {navigation.map((item, index) => (
-                  <li key={index}>
-                    <a
-                      href={item.url}
-                      className="block rounded-md bg-zinc-100 px-6 py-3 text-sm font-semibold text-foreground dark:bg-zinc-900"
-                    >
-                      {item.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </header>
-          {/* <Suspense fallback={<NavbarSkeleton />}>
-          <NavbarServer />
-        </Suspense> */}
+          <Header />
           <main className="row-start-2 flex flex-col gap-8">
             {(await draftMode()).isEnabled ? (
               <>
@@ -130,7 +70,7 @@ export default async function RootLayout({
           <FooterServer />
         </Suspense> */}
           </main>
-          <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px] py-8">
+          {/* <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px] py-8">
             <p className="text-sm font-semibold">
               <a
                 className="flex rounded-md bg-zinc-100 px-6 py-3 text-foreground dark:bg-zinc-900"
@@ -139,7 +79,7 @@ export default async function RootLayout({
                 View Repo
               </a>
             </p>
-          </footer>
+          </footer> */}
         </div>
         <SanityLive />
       </body>

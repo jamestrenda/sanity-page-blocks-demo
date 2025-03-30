@@ -6,46 +6,18 @@ import {preview as internalLinkPreview} from './internalLink'
 import {preview as mediaLinkPreview} from './mediaLink'
 
 export default defineType({
-  name: 'menuItem',
-  title: 'Menu Item',
+  name: 'actions',
+  title: 'Actions',
   type: 'object',
-  //   preview: {
-  //     select: {
-  //       text: 'link.linkText',
-  //       link: 'link.link[0]',
-  //       pageTitle: 'link.link.0.document.title',
-  //     },
-  //     prepare: ({ text, link, pageTitle }) => {
-  //       const type = link?._type;
-  //       let media = undefined;
-
-  //       switch (type) {
-  //         case 'internalRef':
-  //           media = Link2Icon;
-  //           break;
-  //         case 'relativeUrl':
-  //           media = GlobeIcon;
-  //           break;
-  //         case 'externalLink':
-  //           media = ExternalLinkIcon;
-  //           break;
-  //       }
-
-  //       return {
-  //         title: text || pageTitle || 'Untitled',
-  //         media,
-  //       };
-  //     },
-  //   },
   preview: {
     select: {
-      title: 'link.text',
-      to: 'link.to[0]',
-      internalTitle: 'link.to.0.link.document.title',
-      internalSlug: 'link.to.0.link.document.slug.current',
-      internalAnchor: 'link.to[0].anchor',
-      internalParams: 'link.to[0].params',
-      mediaFilename: 'link.to.0.link.file.asset.originalFilename',
+      title: 'action.text',
+      to: 'action.to[0]',
+      internalTitle: 'action.to.0.link.document.title',
+      internalSlug: 'action.to.0.link.document.slug.current',
+      internalAnchor: 'action.to[0].anchor',
+      internalParams: 'action.to[0].params',
+      mediaFilename: 'action.to.0.link.file.asset.originalFilename',
     },
     prepare(selection) {
       const {title, to} = selection
@@ -100,8 +72,14 @@ export default defineType({
   },
   fields: [
     defineField({
-      name: 'link',
-      type: 'link',
+      name: 'actions',
+      type: 'array',
+      of: [
+        {
+          type: 'action',
+        },
+      ],
+      // validation: (Rule) => Rule.required().max(1),
     }),
   ],
 })

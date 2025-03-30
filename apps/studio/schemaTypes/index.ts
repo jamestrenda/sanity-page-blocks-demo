@@ -1,7 +1,8 @@
-import {link} from './link'
+import {action} from './action'
+import actions from './actions'
 import menu from './menu'
-import menuItem from './menuItem'
 import {page} from './page'
+import {generalSettings} from './singletons/settings/general'
 import {home} from './singletons/settings/home'
 
-export const schemaTypes = [home, link, menu, menuItem, page]
+export const schemaTypes = [generalSettings, home, action, menu, page]

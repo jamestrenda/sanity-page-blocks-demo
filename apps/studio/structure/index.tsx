@@ -2,6 +2,7 @@ import {map} from 'rxjs'
 import type {StructureResolver} from 'sanity/structure'
 import {getHomepageObservable} from '../lib/utils'
 import {Icon as HomeSettingsIcon} from '../schemaTypes/singletons/settings/home'
+import {Icon as GeneralSettingsIcon} from '../schemaTypes/singletons/settings/general'
 import {Icon as PageIcon} from '../schemaTypes/page'
 import {HomeIcon, SettingsIcon} from 'lucide-react'
 import {apiVersion} from '../sanity.config'
@@ -48,6 +49,11 @@ export const structure: StructureResolver = async (S, context) => {
 
   const pages = S.listItem().title('Pages').icon(PageIcon).child(getFilteredPages)
 
+  const generalSettings = S.defaultDocument({
+    schemaType: 'generalSettings',
+    documentId: 'generalSettings',
+  }).title('General Settings')
+
   const settings = S.listItem()
     .title('Settings')
     .icon(SettingsIcon)
@@ -55,6 +61,8 @@ export const structure: StructureResolver = async (S, context) => {
       S.list()
         .title('Settings')
         .items([
+          S.listItem().title('General').icon(GeneralSettingsIcon).child(generalSettings),
+          S.divider(),
           homeSettingsListItem,
           S.listItem()
             .title('Menus')

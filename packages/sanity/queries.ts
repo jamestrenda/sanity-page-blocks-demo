@@ -75,10 +75,68 @@ const blocksFragment = /* groq */ `
 `
 
 export const INDEX_QUERY = defineQuery(`*[_id == "homeSettings"][0].homepage-> {
+  _id,
+  _type,
+  "slug": coalesce(slug.current, ""),
+  blocks[] {
+    ${blocksFragment}
+  },
+}`)
+
+export const SETTINGS_QUERY = defineQuery(`{
+  "general": *[_id == "generalSettings"][0] {
     _id,
     _type,
-    "slug": coalesce(slug.current, ""),
-    blocks[] {
-      ${blocksFragment}
-    },
-  }`)
+    repo,
+    headerMenu-> {
+      _id,
+      _type,
+      ${actionsFragment}
+    }
+  }
+}`)
+
+export const HEADER_MENU_QUERY =
+  defineQuery(`*[_id == "generalSettings" && defined(headerMenu)][0].headerMenu-> {
+    _id,
+    _type,
+    const,
+    actions[] {
+      _type,
+      _key,
+      "text": select(
+        defined(text) => {
+          "text": text,
+        },
+        to[0]._type == "internal" => {
+          to[0].link.document->_type == "page" => {
+            "text": to[0].link.document->title
+          }
+        },
+      ).text,
+      "url": select(
+        to[0]._type == "internal" => {
+          to[0].link.document->_type == "page" => {
+            "url":
+            coalesce(to[0].link.document->slug.current  + 
+              select(defined(to[0].params) => "?" + array::join(to[0].params[]{"param": key + "=" + value}.param, "&")
+            )
+            + select(
+              defined(to[0].anchor) => '#' + to[0].anchor, ''
+            ), to[0].link.document->slug.current, '#')
+          }
+        }.url,
+        to[0]._type == "external" => {
+          "url": to[0].link.url,
+          newWindow
+        }.url,
+        to[0]._type == "relative" => {
+          "url": to[0].url,
+        }.url
+      ),
+      "newWindow": select(to[0]._type == "external" => {
+        "newWindow": to[0].link.newWindow
+      }).newWindow,
+    }
+  }
+`)

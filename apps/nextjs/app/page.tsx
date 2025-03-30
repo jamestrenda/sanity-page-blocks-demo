@@ -1,6 +1,6 @@
-import { sanityFetch } from "../lib/sanity/live";
-import { INDEX_QUERY } from "@repo/sanity/queries";
-import { Blocks } from "./components/blocks";
+import { sanityFetch } from '@/lib/sanity/live';
+import { INDEX_QUERY } from '@repo/sanity/queries';
+import { Blocks } from './components/blocks';
 
 async function fetchData() {
   return await sanityFetch({
