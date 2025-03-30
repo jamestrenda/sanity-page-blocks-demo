@@ -7,7 +7,7 @@ export const page = defineType({
   name: 'page',
   title: 'Page',
   type: 'document',
-  icon: <Icon size="1em" />,
+  icon: () => <Icon size="1em" />,
   fields: [
     defineField({
       name: 'title',

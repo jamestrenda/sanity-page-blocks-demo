@@ -1,7 +1,7 @@
 import {MenuIcon} from 'lucide-react'
 import {defineField} from 'sanity'
 
-export const icon = <MenuIcon size="1em" />
+export const icon = () => <MenuIcon size="1em" />
 
 export default {
   name: 'menu',
