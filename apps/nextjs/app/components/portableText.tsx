@@ -9,10 +9,14 @@ const components: Partial<PortableTextReactComponents> = {
   block: {
     normal: ({ children }) => <p>{children}</p>,
     h1: ({ children, value }) => {
-      return <h1 className="text-5xl font-bold text-foreground">{children}</h1>;
+      return (
+        <h1 className="text-3xl font-bold text-foreground md:text-5xl">
+          {children}
+        </h1>
+      );
     },
     h2: ({ children, value }) => {
-      return <h1 className="text-3xl font-bold text-foreground">{children}</h1>;
+      return <h2 className="text-3xl font-bold text-foreground">{children}</h2>;
     },
     overline: ({ children }) => <Overline>{children}</Overline>,
     //     h2: ({ children, value }) => {

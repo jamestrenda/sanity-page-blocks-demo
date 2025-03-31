@@ -20,13 +20,22 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
   };
 
   return (
-    <div className="relative isolate grid min-h-[var(--height)] w-full place-items-center overflow-hidden rounded-md bg-zinc-100 p-8 [--height:600px] lg:aspect-video lg:max-h-[var(--height)] lg:min-h-auto dark:bg-zinc-900">
-      <div className="grid gap-8 *:flex *:flex-col *:items-center *:justify-center *:gap-3 *:text-center">
+    <div className="relative isolate grid min-h-[var(--height)] w-full place-items-center overflow-hidden rounded-md bg-zinc-100 p-10 [--height:600px] lg:aspect-video lg:max-h-[var(--height)] lg:min-h-auto dark:bg-zinc-900">
+      <div
+        className={cn(
+          'grid gap-8 *:flex *:flex-col *:items-center *:justify-center *:gap-3 *:text-center *:[&_a_button]:bg-background *:[&_a_button]:text-foreground',
+          showImage
+            ? 'not-dark:*:[&_a_button]:hover:bg-muted dark:*:[&_a_button]:bg-primary dark:*:[&_a_button]:text-primary-foreground dark:*:[&_a_button]:hover:bg-primary/90'
+            : '*:[&_a_button]:hover:bg-primary *:[&_a_button]:hover:text-primary-foreground dark:*:[&_a_button]:bg-background',
+        )}
+      >
         <PortableText
           value={text}
           className={cn(
-            '[&_p]:mx-auto [&_p]:max-w-3xl [&_p]:text-lg',
-            showImage ? '*:not-[.pt-overline]:text-background' : '',
+            '[&_p]:mx-auto [&_p]:max-w-3xl *:[p]:text-base *:[p]:text-balance *:[p]:md:text-lg dark:*:[p]:text-white/50',
+            showImage
+              ? '*:not-[.pt-overline]:text-background dark:*:not-[.pt-overline]:text-foreground *:[.pt-overline]:bg-background *:[.pt-overline]:text-foreground dark:*:[.pt-overline]:bg-muted dark:*:[p]:text-white/50!'
+              : '',
           )}
         />
         {image && showImage && (

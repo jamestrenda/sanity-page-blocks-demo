@@ -27,7 +27,6 @@ function Action({
     return <Button>Link Broken</Button>;
   }
 
-  console.log('icon', icon);
   return (
     <Link
       href={url || '#'}
