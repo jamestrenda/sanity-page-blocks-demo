@@ -1447,6 +1447,14 @@
                           }
                         },
                         "optional": true
+                      },
+                      "icon": {
+                        "type": "objectAttribute",
+                        "value": {
+                          "type": "inline",
+                          "name": "iconPicker"
+                        },
+                        "optional": true
                       }
                     }
                   },
@@ -2069,6 +2077,43 @@
           "type": "objectAttribute",
           "value": {
             "type": "boolean"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "iconPicker",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "iconPicker"
+          }
+        },
+        "provider": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "svg": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
           },
           "optional": true
         }

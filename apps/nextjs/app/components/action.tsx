@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import type { ActionProps } from '@repo/sanity/types';
+import { Icon } from './icon';
 
 type SanityButtonsProps = {
   actions: ActionProps[] | null;
@@ -17,6 +18,7 @@ function Action({
   newWindow,
   _key,
   _type,
+  icon,
   className,
   ...props
 }: ActionProps & ComponentPropsWithoutRef<typeof Button>) {
@@ -25,6 +27,7 @@ function Action({
     return <Button>Link Broken</Button>;
   }
 
+  console.log('icon', icon);
   return (
     <Link
       href={url || '#'}
@@ -36,8 +39,9 @@ function Action({
       <Button
         // variant={variant}
         {...props}
-        className={cn('w-full', className)}
+        className={cn('w-full cursor-pointer', className)}
       >
+        {icon && <Icon icon={icon} className="mr-1" />}
         {text}
       </Button>
     </Link>

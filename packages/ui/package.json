@@ -23,6 +23,7 @@
     "@repo/utils": "workspace:*",
     "@tailwindcss/cli": "^4.0.17",
     "@tailwindcss/postcss": "^4.0.15",
+    "@tailwindcss/typography": "^0.5.16",
     "@turbo/gen": "^2.4.4",
     "@types/node": "^22.13.9",
     "@types/react": "19.0.10",

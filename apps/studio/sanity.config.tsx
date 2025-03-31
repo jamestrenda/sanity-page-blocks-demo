@@ -6,6 +6,8 @@ import {textBlock, heroBlock} from '@trenda/sanity-plugin-page-blocks'
 import {structure} from './structure'
 import {getEnv} from '@repo/utils/env'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {iconField} from './schemaTypes/iconField'
+import {iconPicker} from 'sanity-plugin-icon-picker'
 
 export const apiVersion = getEnv().SANITY_STUDIO_API_VERSION
 
@@ -20,6 +22,7 @@ export default defineConfig({
     }),
     visionTool(),
     unsplashImageAsset(),
+    iconPicker(),
     heroBlock({
       text: {
         styles: [
@@ -50,6 +53,7 @@ export default defineConfig({
         internal: {
           types: [{type: 'page'}],
         },
+        customFields: [iconField],
       },
     }),
     textBlock(),

@@ -11,6 +11,9 @@ const components: Partial<PortableTextReactComponents> = {
     h1: ({ children, value }) => {
       return <h1 className="text-5xl font-bold text-foreground">{children}</h1>;
     },
+    h2: ({ children, value }) => {
+      return <h1 className="text-3xl font-bold text-foreground">{children}</h1>;
+    },
     overline: ({ children }) => <Overline>{children}</Overline>,
     //     h2: ({ children, value }) => {
     //       const slug = parseChildrenToSlug(value.children);

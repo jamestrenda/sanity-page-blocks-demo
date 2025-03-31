@@ -20,7 +20,7 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
   };
 
   return (
-    <div className="relative isolate grid min-h-[var(--height)] w-full place-items-center overflow-hidden rounded-md bg-zinc-100 p-3 p-8 [--height:600px] lg:aspect-video lg:max-h-[var(--height)] lg:min-h-auto dark:bg-zinc-900">
+    <div className="relative isolate grid min-h-[var(--height)] w-full place-items-center overflow-hidden rounded-md bg-zinc-100 p-8 [--height:600px] lg:aspect-video lg:max-h-[var(--height)] lg:min-h-auto dark:bg-zinc-900">
       <div className="grid gap-8 *:flex *:flex-col *:items-center *:justify-center *:gap-3 *:text-center">
         <PortableText
           value={text}

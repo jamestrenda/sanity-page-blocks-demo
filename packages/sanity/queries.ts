@@ -55,6 +55,7 @@ const actionsFragment = /* groq */ `
     "newWindow": select(action.to[0]._type == "external" => {
       "newWindow": action.to[0].link.newWindow
     }).newWindow,
+    "icon": action.icon,
   }
 `
 
@@ -68,10 +69,19 @@ const heroBlock = /* groq */ `
   }
 `
 
+const textBlock = /* groq */ `
+  _type == "textBlock" => {
+    _type,
+    _type,
+    text,
+  }
+`
+
 const blocksFragment = /* groq */ `
   _key,
   _type,
-  ${heroBlock}
+  ${heroBlock},
+  ${textBlock}
 `
 
 export const INDEX_QUERY = defineQuery(`*[_id == "homeSettings"][0].homepage-> {

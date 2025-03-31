@@ -7,6 +7,7 @@ import { INDEX_QUERYResult } from '@repo/sanity/sanity.types';
 import { BlocksType } from '@repo/sanity/types';
 import { dataset, projectId, studioUrl } from '../../lib/sanity/api';
 import { Hero } from './hero';
+import { TextBlock } from './text-block';
 
 type Block = NonNullable<NonNullable<INDEX_QUERYResult>['blocks']>[number];
 
@@ -24,7 +25,7 @@ type PageData = {
 
 const BLOCK_COMPONENTS = {
   heroBlock: Hero,
-  textBlock: () => <div>Text Block</div>,
+  textBlock: TextBlock,
 } as const;
 
 type BlockType = keyof typeof BLOCK_COMPONENTS;
