@@ -10,7 +10,7 @@ const components: Partial<PortableTextReactComponents> = {
     normal: ({ children }) => <p>{children}</p>,
     h1: ({ children, value }) => {
       return (
-        <h1 className="text-3xl font-bold text-foreground md:text-5xl">
+        <h1 className="text-3xl font-bold text-balance text-foreground md:text-5xl">
           {children}
         </h1>
       );

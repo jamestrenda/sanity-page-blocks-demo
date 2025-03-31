@@ -84,14 +84,27 @@ const blocksFragment = /* groq */ `
   ${textBlock}
 `
 
-export const INDEX_QUERY = defineQuery(`*[_id == "homeSettings"][0].homepage-> {
+const pageFragment = /* groq */ `
   _id,
   _type,
+  title,
   "slug": coalesce(slug.current, ""),
   blocks[] {
     ${blocksFragment}
-  },
+  }
+`
+
+export const INDEX_QUERY = defineQuery(`*[_id == "homeSettings"][0].homepage-> {
+  ${pageFragment}
 }`)
+
+export const PAGE_QUERY = defineQuery(`*[_type == "page" && slug.current == $slug][0]{
+  ${pageFragment}
+}`)
+
+export const PAGE_PATHS_QUERY = defineQuery(`
+  *[_type == "page" && defined(slug.current)].slug.current
+`)
 
 export const SETTINGS_QUERY = defineQuery(`{
   "general": *[_id == "generalSettings"][0] {

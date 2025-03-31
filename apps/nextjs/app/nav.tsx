@@ -1,5 +1,6 @@
 import { sanityFetch } from '@/lib/sanity/live';
 import { HEADER_MENU_QUERY } from '@repo/sanity/queries';
+import { HomeIcon } from 'lucide-react';
 import Link from 'next/link';
 
 export async function Nav() {
@@ -11,6 +12,14 @@ export async function Nav() {
   return (
     <nav>
       <ul className="flex flex-wrap justify-center gap-3">
+        <li>
+          <Link
+            href="/"
+            className="block rounded-md bg-zinc-100 px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-muted dark:bg-zinc-900 dark:text-foreground"
+          >
+            <HomeIcon className="size-5" />
+          </Link>
+        </li>
         {actions?.map((item) => (
           <li key={item._key}>
             <Link

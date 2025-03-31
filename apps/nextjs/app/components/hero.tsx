@@ -32,7 +32,7 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
         <PortableText
           value={text}
           className={cn(
-            '[&_p]:mx-auto [&_p]:max-w-3xl *:[p]:text-base *:[p]:text-balance *:[p]:md:text-lg dark:*:[p]:text-white/50',
+            'mx-auto max-w-4xl [&_p]:mx-auto [&_p]:max-w-3xl *:[p]:text-base *:[p]:text-balance *:[p]:md:text-lg dark:*:[p]:text-white/50',
             showImage
               ? '*:not-[.pt-overline]:text-background dark:*:not-[.pt-overline]:text-foreground *:[.pt-overline]:bg-background *:[.pt-overline]:text-foreground dark:*:[.pt-overline]:bg-muted dark:*:[p]:text-white/50!'
               : '',
@@ -61,12 +61,19 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
           onValueChange={handleChange}
           size="lg"
         >
-          <ToggleGroupItem value="image" aria-label="Toggle background image">
-            <ImageIcon className="size-4" />
-          </ToggleGroupItem>
-          <ToggleGroupItem value="actions" aria-label="Toggle call-to-actions">
-            <MousePointerClickIcon className="size-4" />
-          </ToggleGroupItem>
+          {image && (
+            <ToggleGroupItem value="image" aria-label="Toggle background image">
+              <ImageIcon className="size-4" />
+            </ToggleGroupItem>
+          )}
+          {actions && (
+            <ToggleGroupItem
+              value="actions"
+              aria-label="Toggle call-to-actions"
+            >
+              <MousePointerClickIcon className="size-4" />
+            </ToggleGroupItem>
+          )}
           {/* <ToggleGroupItem value="text" aria-label="Toggle portable text">
             <TextIcon className="size-4" />
           </ToggleGroupItem> */}
