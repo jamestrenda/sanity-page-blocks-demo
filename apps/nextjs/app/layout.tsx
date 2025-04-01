@@ -1,14 +1,15 @@
 import '@repo/ui/styles.css';
 
 // import type { Metadata } from "next";
+import { cn } from '@repo/utils';
 import { VisualEditing } from 'next-sanity';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { draftMode } from 'next/headers';
 import { preconnect, prefetchDNS } from 'react-dom';
 import { SanityLive } from '../lib/sanity/live';
+import { Header } from './components/header';
 import { PreviewBar } from './components/preview-bar';
-import { Header } from './header';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,7 +37,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={cn(
+          `${geistSans.variable} ${geistMono.variable} antialiased`,
+        )}
       >
         <div className="grid min-h-screen grid-rows-[auto_1fr_auto] gap-4 p-8 font-[family-name:var(--font-geist-sans)]">
           <Header />

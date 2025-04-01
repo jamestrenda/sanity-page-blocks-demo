@@ -3,6 +3,7 @@ import { BlocksType } from '@repo/sanity/types';
 import { ToggleGroup, ToggleGroupItem } from '@repo/ui/components/toggle-group';
 import { cn } from '@repo/utils';
 import { ImageIcon, MousePointerClickIcon } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Actions } from './action';
 import { SanityImage } from './image';
@@ -11,8 +12,11 @@ import { PortableText } from './portableText';
 type HeroBlockProps = BlocksType<'heroBlock'>;
 
 export const Hero = ({ text, image, actions }: HeroBlockProps) => {
-  const [showImage, setShowImage] = useState(false);
-  const [showActions, setShowActions] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+
+  const [showImage, setShowImage] = useState(isHome ? true : false);
+  const [showActions, setShowActions] = useState(isHome ? true : false);
 
   const handleChange = (value: string[]) => {
     setShowImage(value.includes('image'));
@@ -54,31 +58,36 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
         )}
         {actions && showActions && <Actions actions={actions} />}
       </div>
-      <div className="absolute top-4 right-4 z-1">
-        <ToggleGroup
-          variant="primary"
-          type="multiple"
-          onValueChange={handleChange}
-          size="lg"
-        >
-          {image && (
-            <ToggleGroupItem value="image" aria-label="Toggle background image">
-              <ImageIcon className="size-4" />
-            </ToggleGroupItem>
-          )}
-          {actions && (
-            <ToggleGroupItem
-              value="actions"
-              aria-label="Toggle call-to-actions"
-            >
-              <MousePointerClickIcon className="size-4" />
-            </ToggleGroupItem>
-          )}
-          {/* <ToggleGroupItem value="text" aria-label="Toggle portable text">
+      {!isHome && (
+        <div className="absolute top-4 right-4 z-1">
+          <ToggleGroup
+            variant="primary"
+            type="multiple"
+            onValueChange={handleChange}
+            size="lg"
+          >
+            {image && (
+              <ToggleGroupItem
+                value="image"
+                aria-label="Toggle background image"
+              >
+                <ImageIcon className="size-4" />
+              </ToggleGroupItem>
+            )}
+            {actions && (
+              <ToggleGroupItem
+                value="actions"
+                aria-label="Toggle call-to-actions"
+              >
+                <MousePointerClickIcon className="size-4" />
+              </ToggleGroupItem>
+            )}
+            {/* <ToggleGroupItem value="text" aria-label="Toggle portable text">
             <TextIcon className="size-4" />
           </ToggleGroupItem> */}
-        </ToggleGroup>
-      </div>
+          </ToggleGroup>
+        </div>
+      )}
     </div>
   );
 };

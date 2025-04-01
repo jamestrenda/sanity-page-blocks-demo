@@ -1,4 +1,4 @@
-import {defineConfig} from 'sanity'
+import {defineConfig, defineType} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
@@ -40,7 +40,9 @@ export default defineConfig({
                   margin: 0,
                   fontSize: '.875em',
                   fontWeight: 600,
-                  textTransform: 'uppercase',
+                  backgroundColor: 'oklch(0.94 0 0)',
+                  padding: '6px 16px',
+                  borderRadius: '100px',
                 }}
               >
                 {props.children}
@@ -56,7 +58,55 @@ export default defineConfig({
         customFields: [iconField],
       },
     }),
-    textBlock(),
+    textBlock({
+      text: {
+        styles: [
+          {
+            title: 'Heading 1',
+            value: 'h1',
+          },
+          {
+            title: 'Heading 2',
+            value: 'h2',
+          },
+          {
+            title: 'Heading 3',
+            value: 'h3',
+          },
+          {
+            title: 'Heading 4',
+            value: 'h4',
+          },
+          {
+            title: 'Heading 5',
+            value: 'h5',
+          },
+          {
+            title: 'Blockquote',
+            value: 'blockquote',
+          },
+          {
+            title: 'Overline',
+            value: 'overline',
+            component: (props) => (
+              <span
+                style={{
+                  fontFamily: `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Helvetica, Arial, system-ui, sans-serif`,
+                  margin: 0,
+                  fontSize: '.875em',
+                  fontWeight: 600,
+                  backgroundColor: 'oklch(0.94 0 0)',
+                  padding: '6px 16px',
+                  borderRadius: '100px',
+                }}
+              >
+                {props.children}
+              </span>
+            ),
+          },
+        ],
+      },
+    }),
   ],
   schema: {
     types: schemaTypes,

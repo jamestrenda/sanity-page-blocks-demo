@@ -11,11 +11,11 @@ export async function Nav() {
 
   return (
     <nav>
-      <ul className="flex flex-wrap justify-center gap-3">
+      <ul className="flex flex-col justify-center gap-3 text-center md:flex-row md:flex-wrap">
         <li>
           <Link
             href="/"
-            className="block rounded-md bg-zinc-100 px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-muted dark:bg-zinc-900 dark:text-foreground"
+            className="grid place-items-center rounded-md bg-zinc-100 px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-muted md:block dark:bg-zinc-900 dark:text-foreground"
           >
             <HomeIcon className="size-5" />
           </Link>

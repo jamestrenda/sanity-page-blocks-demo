@@ -35,13 +35,9 @@ function Action({
       title={`Click to visit ${text}`}
       className="w-full sm:w-fit"
     >
-      <Button
-        // variant={variant}
-        {...props}
-        className={cn('w-full cursor-pointer', className)}
-      >
-        {icon && <Icon icon={icon} className="mr-1" />}
+      <Button {...props} className={cn('w-full cursor-pointer', className)}>
         {text}
+        {icon && <Icon icon={icon} />}
       </Button>
     </Link>
   );

@@ -819,11 +819,11 @@
                       },
                       {
                         "type": "string",
-                        "value": "h6"
+                        "value": "blockquote"
                       },
                       {
                         "type": "string",
-                        "value": "blockquote"
+                        "value": "overline"
                       }
                     ]
                   },

@@ -18,7 +18,7 @@ export const BlockToggleGroup = <T extends ToggleGroupProps['type']>(
 ) => {
   return (
     <div>
-      <ToggleGroup variant="primary" type="multiple" onValueChange={undefined}>
+      <ToggleGroup variant="primary" type="multiple">
         <ToggleGroupItem value="image" aria-label="Toggle background image">
           <ImageIcon className="size-4" />
         </ToggleGroupItem>

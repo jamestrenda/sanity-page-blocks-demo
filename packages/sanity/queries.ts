@@ -50,11 +50,19 @@ const actionsFragment = /* groq */ `
       }.url,
       action.to[0]._type == "relative" => {
         "url": action.to[0].url,
+      }.url,
+      action.to[0]._type == "media" => {
+        "url": action.to[0].link.file.asset->url,
       }.url
     ),
-    "newWindow": select(action.to[0]._type == "external" => {
-      "newWindow": action.to[0].link.newWindow
-    }).newWindow,
+    "newWindow": select(
+      action.to[0]._type == "external" => {
+        "newWindow": action.to[0].link.newWindow
+      },
+      action.to[0]._type == "media" => {
+        "newWindow": true
+      }
+    ).newWindow,
     "icon": action.icon,
   }
 `
@@ -155,11 +163,19 @@ export const HEADER_MENU_QUERY =
         }.url,
         to[0]._type == "relative" => {
           "url": to[0].url,
+        }.url,
+        to[0]._type == "media" => {
+          "url": to[0].link.file.asset->url,
         }.url
       ),
-      "newWindow": select(to[0]._type == "external" => {
-        "newWindow": to[0].link.newWindow
-      }).newWindow,
+      "newWindow": select(
+        to[0]._type == "external" => {
+          "newWindow": to[0].link.newWindow
+        },
+        to[0]._type == "media" => {
+          "newWindow": true
+        }
+      ).newWindow,
     }
   }
 `)
