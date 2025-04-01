@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from '@repo/ui/components/button';
 import { cn } from '@repo/utils';
 import Link from 'next/link';
