@@ -9,11 +9,19 @@ import {
   DrawerTrigger,
 } from '@repo/ui/components/drawer';
 import { MenuIcon } from 'lucide-react';
-import { PropsWithChildren } from 'react';
+import { usePathname } from 'next/navigation';
+import { PropsWithChildren, useEffect, useState } from 'react';
 
 export const MobileNav = ({ children }: PropsWithChildren) => {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={() => setOpen(true)}>
       <DrawerTrigger className="fixed right-4 bottom-4 z-50 rounded-full bg-primary p-4 text-primary-foreground shadow-md">
         <MenuIcon className="size-6" />
       </DrawerTrigger>
