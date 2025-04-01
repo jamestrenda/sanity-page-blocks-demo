@@ -4,7 +4,7 @@ import {
   type PortableTextBlock,
   type PortableTextReactComponents,
 } from 'next-sanity';
-import { CodeBlock } from './code-block';
+import { CodeBlock } from './code';
 import { SanityImage } from './image';
 
 const components: Partial<PortableTextReactComponents> = {

@@ -13,7 +13,7 @@ interface IconProps extends Omit<ComponentProps<'span'>, 'src'> {
   alt?: string; // Add alt text prop for accessibility
 }
 
-export const Icon = memo(function SanityIconUnmemorized({
+export const Icon = memo(function ({
   icon,
   className,
   alt: altText = 'sanity-icon',
