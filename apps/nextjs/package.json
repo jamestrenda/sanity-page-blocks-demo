@@ -22,7 +22,9 @@
     "next": "15.2.3",
     "next-sanity": "^9.9.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-refractor": "^3.1.1",
+    "refractor": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

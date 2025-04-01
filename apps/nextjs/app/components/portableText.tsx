@@ -4,6 +4,8 @@ import {
   type PortableTextBlock,
   type PortableTextReactComponents,
 } from 'next-sanity';
+import { CodeBlock } from './code-block';
+import { SanityImage } from './image';
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
@@ -100,21 +102,28 @@ const components: Partial<PortableTextReactComponents> = {
   //     bullet: ({ children }) => <li className="">{children}</li>,
   //     number: ({ children }) => <li className="">{children}</li>,
   //   },
-  //   types: {
-  //     image: ({ value }) => {
-  //       return (
-  //         <div className="my-4">
-  //           <SanityImage
-  //             asset={value}
-  //             className="w-full h-auto rounded-lg"
-  //             width={1600}
-  //             height={900}
-  //             // priority
-  //           />
-  //         </div>
-  //       );
-  //     },
-  //   },
+  types: {
+    image: ({ value }) => {
+      return (
+        <SanityImage
+          asset={value}
+          className="h-auto w-full rounded-sm object-contain"
+          // width={1600}
+          // height={900}
+          // priority
+        />
+      );
+    },
+    code: ({ value }) => {
+      return (
+        <CodeBlock
+          code={value.code}
+          language={value.language}
+          highlightedLines={value.highlightedLines}
+        />
+      );
+    },
+  },
   //   hardBreak: () => <br />,
 };
 

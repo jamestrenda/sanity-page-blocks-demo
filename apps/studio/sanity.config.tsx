@@ -1,4 +1,4 @@
-import {defineConfig, defineType} from 'sanity'
+import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
@@ -8,6 +8,7 @@ import {getEnv} from '@repo/utils/env'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {iconField} from './schemaTypes/iconField'
 import {iconPicker} from 'sanity-plugin-icon-picker'
+import {codeInput} from '@sanity/code-input'
 
 export const apiVersion = getEnv().SANITY_STUDIO_API_VERSION
 
@@ -23,6 +24,7 @@ export default defineConfig({
     visionTool(),
     unsplashImageAsset(),
     iconPicker(),
+    codeInput(),
     heroBlock({
       text: {
         styles: [
@@ -103,6 +105,15 @@ export default defineConfig({
                 {props.children}
               </span>
             ),
+          },
+        ],
+        blocks: [
+          {
+            title: 'Image',
+            type: 'image',
+          },
+          {
+            type: 'code',
           },
         ],
       },
