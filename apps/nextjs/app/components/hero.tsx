@@ -2,7 +2,7 @@ import { BlocksType } from '@repo/sanity/types';
 
 import { ToggleGroup, ToggleGroupItem } from '@repo/ui/components/toggle-group';
 import { cn } from '@repo/utils';
-import { ImageIcon, MousePointerClickIcon } from 'lucide-react';
+import { DotIcon, ImageIcon, MousePointerClickIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Actions } from './action';
@@ -65,6 +65,12 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
             type="multiple"
             onValueChange={handleChange}
             size="lg"
+            className={cn(
+              '',
+              showImage
+                ? '[&_button]:bg-background! [&_button]:text-foreground! [&_button]:transition [&_button]:hover:bg-muted!'
+                : '',
+            )}
           >
             {image && (
               <ToggleGroupItem
@@ -72,6 +78,7 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
                 aria-label="Toggle background image"
               >
                 <ImageIcon className="size-4" />
+                <DotIcon className="absolute -top-[22px] -right-[22px] hidden size-12 text-green-400 group-data-[state=on]/toggle-group-item:flex" />
               </ToggleGroupItem>
             )}
             {actions && (
@@ -80,11 +87,9 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
                 aria-label="Toggle call-to-actions"
               >
                 <MousePointerClickIcon className="size-4" />
+                <DotIcon className="absolute -top-[22px] -right-[22px] hidden size-12 text-green-400 group-data-[state=on]/toggle-group-item:flex" />
               </ToggleGroupItem>
             )}
-            {/* <ToggleGroupItem value="text" aria-label="Toggle portable text">
-            <TextIcon className="size-4" />
-          </ToggleGroupItem> */}
           </ToggleGroup>
         </div>
       )}
