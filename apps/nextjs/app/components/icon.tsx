@@ -13,12 +13,12 @@ interface IconProps extends Omit<ComponentProps<'span'>, 'src'> {
   alt?: string; // Add alt text prop for accessibility
 }
 
-export const Icon = memo(function ({
+export const Icon = ({
   icon,
   className,
   alt: altText = 'sanity-icon',
   ...props
-}: IconProps) {
+}: IconProps) => {
   const alt = typeof icon === 'object' && icon?.name ? icon?.name : altText;
   const svg = typeof icon === 'object' ? icon?.svg : icon;
 
@@ -39,4 +39,6 @@ export const Icon = memo(function ({
       title={alt}
     />
   );
-});
+};
+
+export default memo(Icon);

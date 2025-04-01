@@ -4,8 +4,8 @@ import { cn } from '@repo/utils';
 import Link from 'next/link';
 import type { ComponentPropsWithoutRef } from 'react';
 
+import Icon from '@/app/components/icon';
 import type { ActionProps } from '@repo/sanity/types';
-import { Icon } from './icon';
 
 type SanityButtonsProps = {
   actions: ActionProps[] | null;
