@@ -45,8 +45,8 @@ export function SanityImage({
 
   // Base image props
   const imageProps = {
-    alt: alt ?? asset.alt ?? 'Image',
-    'aria-label': alt ?? asset.alt ?? 'Image',
+    alt: alt ?? asset.altText ?? 'Image',
+    'aria-label': alt ?? asset.altText ?? 'Image',
     src: url,
     className: cn(className),
     // Optimize image sizes for performance and LCP
