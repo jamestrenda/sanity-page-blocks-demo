@@ -16,6 +16,7 @@ type SanityButtonsProps = {
 function Action({
   text,
   url,
+  download,
   newWindow,
   _key,
   _type,
@@ -31,14 +32,15 @@ function Action({
   return (
     <Link
       href={url || '#'}
-      target={newWindow ? '_blank' : '_self'}
+      target={newWindow && !download ? '_blank' : '_self'}
       aria-label={`Navigate to ${text}`}
       title={`Click to visit ${text}`}
       className="w-full sm:w-fit"
+      download={download}
     >
       <Button {...props} className={cn('w-full cursor-pointer', className)}>
-        {text}
         {icon && <Icon icon={icon} />}
+        {text}
       </Button>
     </Link>
   );

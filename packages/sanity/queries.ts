@@ -63,6 +63,11 @@ const actionsFragment = /* groq */ `
         "newWindow": true
       }
     ).newWindow,
+    "download": select(
+      action.to[0]._type == "media" => {
+        "download": true
+      }
+    ).download,
     "icon": action.icon,
   }
 `
