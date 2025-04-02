@@ -41,7 +41,6 @@ export default async function RootLayout({
           `${geistSans.variable} ${geistMono.variable} antialiased`,
         )}
       >
-        {/* <div className="grid min-h-screen grid-rows-[auto_1fr_auto] gap-4 p-8 font-[family-name:var(--font-geist-sans)]"> */}
         <div className="flex min-h-dvh flex-col p-8 font-[family-name:var(--font-geist-sans)]">
           <Header />
           <main className="flex w-full grow flex-col gap-8">
@@ -70,20 +69,7 @@ export default async function RootLayout({
             ) : (
               children
             )}
-            {/* <Suspense fallback={<FooterSkeleton />}>
-          <FooterServer />
-        </Suspense> */}
           </main>
-          {/* <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px] py-8">
-            <p className="text-sm font-semibold">
-              <a
-                className="flex rounded-md bg-zinc-100 px-6 py-3 text-foreground dark:bg-zinc-900"
-                href="https://github.com/jamestrenda/sanity-page-blocks-demo"
-              >
-                View Repo
-              </a>
-            </p>
-          </footer> */}
         </div>
         <SanityLive />
       </body>
