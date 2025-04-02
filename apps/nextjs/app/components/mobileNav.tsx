@@ -21,7 +21,7 @@ export const MobileNav = ({ children }: PropsWithChildren) => {
   }, [pathname]);
 
   return (
-    <Drawer open={open} onOpenChange={() => setOpen(true)}>
+    <Drawer open={open} onOpenChange={(open) => setOpen(open)}>
       <DrawerTrigger className="fixed right-4 bottom-4 rounded-full bg-primary p-4 text-primary-foreground shadow-md">
         <MenuIcon className="size-6" />
       </DrawerTrigger>
