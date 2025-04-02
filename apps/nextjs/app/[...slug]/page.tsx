@@ -38,9 +38,9 @@ async function fetchPaths() {
 //   return getMetaData(pageData);
 // }
 
-export async function generateStaticParams() {
-  return await fetchPaths();
-}
+// export async function generateStaticParams() {
+//   return await fetchPaths();
+// }
 
 export default async function SlugPage({
   params,
