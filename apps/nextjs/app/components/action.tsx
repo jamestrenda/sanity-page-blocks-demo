@@ -34,7 +34,7 @@ function Action({
       href={url || '#'}
       target={newWindow && !download ? '_blank' : '_self'}
       aria-label={`Navigate to ${text}`}
-      title={`Click to visit ${text}`}
+      title={download ? 'Download file' : `Visit ${text}`}
       className="w-full sm:w-fit"
       download={download}
     >
