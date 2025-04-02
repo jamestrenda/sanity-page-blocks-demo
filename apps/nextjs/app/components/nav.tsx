@@ -15,6 +15,7 @@ export async function Nav() {
         <li>
           <Link
             href="/"
+            aria-label="Navigate to homepage"
             className="grid place-items-center rounded-md bg-zinc-100 px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-muted md:block dark:bg-zinc-900 dark:text-foreground"
           >
             <HomeIcon className="size-5" />
