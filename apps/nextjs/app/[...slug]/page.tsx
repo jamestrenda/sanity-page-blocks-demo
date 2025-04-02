@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 
 import { sanityFetch } from '@/lib/sanity/live';
 // import { getMetaData } from "@/lib/seo";
-import { PAGE_QUERY } from '@repo/sanity/queries';
+import { client } from '@/lib/sanity/client';
+import { PAGE_PATHS_QUERY, PAGE_QUERY } from '@repo/sanity/queries';
 import { Blocks } from '../components/blocks';
 
 async function fetchData(slug: string) {
@@ -12,16 +13,16 @@ async function fetchData(slug: string) {
   });
 }
 
-// async function fetchPaths() {
-//   const slugs = await client.fetch(PAGE_PATHS_QUERY);
-//   const paths: { slug: string[] }[] = [];
-//   for (const slug of slugs) {
-//     if (!slug) continue;
-//     const parts = slug.split('/').filter(Boolean);
-//     paths.push({ slug: parts });
-//   }
-//   return paths;
-// }
+async function fetchPaths() {
+  const slugs = await client.fetch(PAGE_PATHS_QUERY);
+  const paths: { slug: string[] }[] = [];
+  for (const slug of slugs) {
+    if (!slug) continue;
+    const parts = slug.split('/').filter(Boolean);
+    paths.push({ slug: parts });
+  }
+  return paths;
+}
 
 // export async function generateMetadata({
 //   params,
@@ -37,9 +38,9 @@ async function fetchData(slug: string) {
 //   return getMetaData(pageData);
 // }
 
-// export async function generateStaticParams() {
-//   return await fetchPaths();
-// }
+export async function generateStaticParams() {
+  return await fetchPaths();
+}
 
 export default async function SlugPage({
   params,
