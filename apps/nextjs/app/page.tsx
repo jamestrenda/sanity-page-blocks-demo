@@ -1,4 +1,5 @@
 import { sanityFetch } from '@/lib/sanity/live';
+import { getMetaData } from '@/lib/seo';
 import { INDEX_QUERY } from '@repo/sanity/queries';
 import { Blocks } from './components/blocks';
 
@@ -6,6 +7,14 @@ async function fetchData() {
   return await sanityFetch({
     query: INDEX_QUERY,
   });
+}
+
+export async function generateMetadata() {
+  const { data: pageData } = await fetchData();
+  if (!pageData) {
+    return getMetaData({});
+  }
+  return getMetaData(pageData);
 }
 
 export default async function Home() {
