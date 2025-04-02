@@ -1,17 +1,18 @@
-import { createClient } from "next-sanity";
-import { apiVersion, dataset, projectId, studioUrl } from "./api";
-import createImageUrlBuilder from "@sanity/image-url";
-import { SanityImageSource } from "@sanity/asset-utils";
+import { SanityImageSource } from '@sanity/asset-utils';
+import createImageUrlBuilder from '@sanity/image-url';
+import { createClient } from 'next-sanity';
+import { apiVersion, dataset, projectId, studioUrl } from './api';
 
 export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: process.env.NODE_ENV === "production",
-  perspective: "published",
+  // useCdn: process.env.NODE_ENV === "production",
+  useCdn: false,
+  perspective: 'published',
   stega: {
     studioUrl,
-    enabled: process.env.NEXT_PUBLIC_VERCEL_ENV === "preview",
+    enabled: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
   },
 });
 
@@ -21,4 +22,4 @@ const imageBuilder = createImageUrlBuilder({
 });
 
 export const urlFor = (source: SanityImageSource) =>
-  imageBuilder.image(source).auto("format").fit("max").format("webp");
+  imageBuilder.image(source).auto('format').fit('max').format('webp');
