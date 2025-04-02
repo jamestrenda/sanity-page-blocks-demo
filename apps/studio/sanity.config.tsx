@@ -43,6 +43,7 @@ export default defineConfig({
                   fontSize: '.875em',
                   fontWeight: 600,
                   backgroundColor: 'oklch(0.94 0 0)',
+                  color: 'oklch(0 0 0)',
                   padding: '6px 16px',
                   borderRadius: '100px',
                 }}
