@@ -98,13 +98,11 @@ const blocksFragment = /* groq */ `
 `
 
 const pageFragment = /* groq */ `
-  _id,
-  _type,
-  title,
+  ...,
   "slug": coalesce(slug.current, ""),
   blocks[] {
     ${blocksFragment}
-  }
+  },
 `
 
 export const INDEX_QUERY = defineQuery(`*[_id == "homeSettings"][0].homepage-> {

@@ -1,7 +1,6 @@
 import '@repo/ui/styles.css';
 
 import { cn } from '@repo/utils';
-import type { Metadata } from 'next';
 import { VisualEditing } from 'next-sanity';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -20,11 +19,6 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });
-
-export const metadata: Metadata = {
-  title: 'Sanity Page Blocks',
-  description: 'A Next.js demo of Sanity Page Blocks plugin.',
-};
 
 export default async function RootLayout({
   children,
