@@ -4,7 +4,7 @@ import { Nav, NavSkeleton } from './nav';
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 z-99 flex items-center justify-center bg-background md:py-8">
+    <header className="sticky top-0 z-10 flex items-center justify-center bg-background md:py-8">
       <div className="hidden md:block">
         <Suspense fallback={<NavSkeleton />}>
           <Nav />

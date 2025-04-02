@@ -41,7 +41,7 @@ export default async function RootLayout({
           `${geistSans.variable} ${geistMono.variable} antialiased`,
         )}
       >
-        <div className="flex min-h-dvh flex-col p-8 font-[family-name:var(--font-geist-sans)]">
+        <div className="flex min-h-dvh flex-col p-4 font-[family-name:var(--font-geist-sans)] md:p-8">
           <Header />
           <main className="flex w-full grow flex-col gap-8">
             {(await draftMode()).isEnabled ? (

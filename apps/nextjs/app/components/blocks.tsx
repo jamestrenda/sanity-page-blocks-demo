@@ -44,7 +44,7 @@ export function Blocks({ blocks: initial = [], _id, _type }: Props) {
 
   return (
     <div
-      className="blocks space-y-14"
+      className="blocks space-y-8 md:space-y-14"
       data-sanity={createDataAttribute({
         id: _id,
         baseUrl: studioUrl,
