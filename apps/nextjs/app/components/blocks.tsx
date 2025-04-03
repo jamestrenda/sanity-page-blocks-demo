@@ -7,6 +7,7 @@ import { INDEX_QUERYResult } from '@repo/sanity/sanity.types';
 import { BlocksType } from '@repo/sanity/types';
 import { dataset, projectId, studioUrl } from '../../lib/sanity/api';
 import { CarouselBlock } from './carousel';
+import { FaqBlock } from './faqBlock';
 import { Hero } from './hero';
 import { TextBlock } from './text-block';
 
@@ -26,6 +27,7 @@ type PageData = {
 
 const BLOCK_COMPONENTS = {
   carouselBlock: CarouselBlock,
+  faqBlock: FaqBlock,
   heroBlock: Hero,
   textBlock: TextBlock,
 } as const;

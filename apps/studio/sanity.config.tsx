@@ -1,14 +1,21 @@
-import {defineConfig} from 'sanity'
+import {defineConfig, defineField} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
-import {textBlock, heroBlock, carouselBlock} from '@trenda/sanity-plugin-page-blocks'
+import {
+  textBlock,
+  heroBlock,
+  carouselBlock,
+  faqBlock,
+  getPortableTextPreview,
+} from '@trenda/sanity-plugin-page-blocks'
 import {structure} from './structure'
 import {getEnv} from '@repo/utils/env'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {iconField} from './schemaTypes/iconField'
 import {iconPicker} from 'sanity-plugin-icon-picker'
 import {codeInput} from '@sanity/code-input'
+import Overline from './components/Overline'
 
 export const apiVersion = getEnv().SANITY_STUDIO_API_VERSION
 
@@ -32,6 +39,30 @@ export default defineConfig({
             type: 'heroBlock',
           },
         ],
+      },
+    }),
+    faqBlock({
+      header: defineField({
+        name: 'header',
+        title: 'Header',
+        type: 'headerTextBlock',
+      }),
+      faqs: {
+        schemaType: [
+          {
+            type: 'faq',
+          },
+        ],
+      },
+      preview: {
+        select: {
+          title: 'header.text',
+        },
+        prepare(selection) {
+          const blockTitle = 'FAQ Block'
+          const preview = getPortableTextPreview(selection.title, blockTitle)
+          return preview
+        },
       },
     }),
     heroBlock({
@@ -71,6 +102,22 @@ export default defineConfig({
       },
     }),
     textBlock({
+      name: 'headerTextBlock',
+      text: {
+        styles: [
+          {
+            title: 'Overline',
+            value: 'overline',
+            component: Overline,
+          },
+          {
+            title: 'Heading 2',
+            value: 'h2',
+          },
+        ],
+      },
+    }),
+    textBlock({
       text: {
         styles: [
           {
@@ -100,21 +147,7 @@ export default defineConfig({
           {
             title: 'Overline',
             value: 'overline',
-            component: (props) => (
-              <span
-                style={{
-                  fontFamily: `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Helvetica, Arial, system-ui, sans-serif`,
-                  margin: 0,
-                  fontSize: '.875em',
-                  fontWeight: 600,
-                  backgroundColor: 'oklch(0.94 0 0)',
-                  padding: '6px 16px',
-                  borderRadius: '100px',
-                }}
-              >
-                {props.children}
-              </span>
-            ),
+            component: Overline,
           },
         ],
         blocks: [

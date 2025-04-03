@@ -82,11 +82,38 @@ const heroBlock = /* groq */ `
   }
 `
 
+const textBlockFragment = /* groq */ `
+  _type,
+  _key,
+  text
+`
+
 const textBlock = /* groq */ `
   _type == "textBlock" => {
+    ${textBlockFragment}
+  }
+`
+
+const headerTextBlock = /* groq */ `
+  header._type == "headerTextBlock" => {
+    "text": header.text,
+  }
+`
+
+const faqBlock = /* groq */ `
+  _type == "faqBlock" => {
     _type,
     _key,
-    text,
+    "header": select(
+      ${headerTextBlock},
+      defined(title) => title,
+    ),
+    faqs[]-> {
+      _type,
+      _id,
+      question,
+      answer
+    }
   }
 `
 
@@ -104,6 +131,7 @@ const blocksFragment = /* groq */ `
   _key,
   _type,
   ${carouselBlock},
+  ${faqBlock},
   ${heroBlock},
   ${textBlock}
 `
