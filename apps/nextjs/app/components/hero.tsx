@@ -11,12 +11,21 @@ import { PortableText } from './portableText';
 
 type HeroBlockProps = BlocksType<'heroBlock'>;
 
-export const Hero = ({ text, image, actions }: HeroBlockProps) => {
+export const Hero = ({
+  text,
+  image,
+  actions,
+  showToggles = true,
+}: HeroBlockProps & { showToggles?: boolean }) => {
   const pathname = usePathname();
   const isHome = pathname === '/';
 
-  const [showImage, setShowImage] = useState(isHome ? true : false);
-  const [showActions, setShowActions] = useState(isHome ? true : false);
+  const [showImage, setShowImage] = useState(
+    isHome || !showToggles ? true : false,
+  );
+  const [showActions, setShowActions] = useState(
+    isHome || !showToggles ? true : false,
+  );
 
   const handleChange = (value: string[]) => {
     setShowImage(value.includes('image'));
@@ -58,7 +67,7 @@ export const Hero = ({ text, image, actions }: HeroBlockProps) => {
         )}
         {actions && showActions && <Actions actions={actions} />}
       </div>
-      {!isHome && (
+      {!isHome && showToggles && (
         <div className="absolute top-4 right-4 z-1">
           <ToggleGroup
             variant="primary"

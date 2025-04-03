@@ -18,7 +18,7 @@ export const CarouselBlock = ({ items }: CarouselBlockProps) => {
         }}
         plugins={[
           Autoplay({
-            delay: 3000,
+            delay: 5000,
             playOnInit: true,
             // stopOnMouseEnter: true,
             // stopOnInteraction: true,
@@ -29,7 +29,11 @@ export const CarouselBlock = ({ items }: CarouselBlockProps) => {
           {Array.isArray(items) &&
             items.map((item, index) => (
               <CarouselItem key={index}>
-                <Hero key={`${item._type}-${item._key}`} {...item} />
+                <Hero
+                  key={`${item._type}-${item._key}`}
+                  {...item}
+                  showToggles={false}
+                />
               </CarouselItem>
             ))}
         </CarouselContent>
