@@ -75,7 +75,7 @@ const actionsFragment = /* groq */ `
 const heroBlock = /* groq */ `
   _type == "heroBlock" => {
     _type,
-    _type,
+    _key,
     text,
     ${customImageFragment},
     ${actionsFragment}
@@ -85,14 +85,25 @@ const heroBlock = /* groq */ `
 const textBlock = /* groq */ `
   _type == "textBlock" => {
     _type,
-    _type,
+    _key,
     text,
+  }
+`
+
+const carouselBlock = /* groq */ `
+  _type == "carouselBlock" => {
+    _type,
+    _key,
+    items[] {
+      ${heroBlock}
+    }
   }
 `
 
 const blocksFragment = /* groq */ `
   _key,
   _type,
+  ${carouselBlock},
   ${heroBlock},
   ${textBlock}
 `

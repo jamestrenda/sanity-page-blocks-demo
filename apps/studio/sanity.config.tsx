@@ -2,7 +2,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
-import {textBlock, heroBlock} from '@trenda/sanity-plugin-page-blocks'
+import {textBlock, heroBlock, carouselBlock} from '@trenda/sanity-plugin-page-blocks'
 import {structure} from './structure'
 import {getEnv} from '@repo/utils/env'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
@@ -25,6 +25,15 @@ export default defineConfig({
     unsplashImageAsset(),
     iconPicker(),
     codeInput(),
+    carouselBlock({
+      items: {
+        of: [
+          {
+            type: 'heroBlock',
+          },
+        ],
+      },
+    }),
     heroBlock({
       text: {
         styles: [

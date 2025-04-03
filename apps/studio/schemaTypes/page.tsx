@@ -31,7 +31,7 @@ export const page = defineType({
       name: 'blocks',
       title: 'Blocks',
       type: 'array',
-      of: [{type: 'heroBlock'}, {type: 'textBlock'}],
+      of: [{type: 'carouselBlock'}, {type: 'heroBlock'}, {type: 'textBlock'}],
     }),
     ...seoFields,
   ],

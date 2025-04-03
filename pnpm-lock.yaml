@@ -71,6 +71,9 @@ importers:
       babel-plugin-react-compiler:
         specifier: 19.0.0-beta-decd7b8-20250118
         version: 19.0.0-beta-decd7b8-20250118
+      embla-carousel-autoplay:
+        specifier: ^8.5.2
+        version: 8.5.2(embla-carousel@8.5.2)
       lucide-react:
         specifier: ^0.484.0
         version: 0.484.0(react@19.1.0)
@@ -148,8 +151,8 @@ importers:
         specifier: 3.79.0
         version: 3.79.0(@babel/runtime@7.27.0)(@codemirror/lint@6.8.5)(@codemirror/theme-one-dark@6.1.2)(@emotion/is-prop-valid@1.2.2)(codemirror@6.0.1)(react-dom@18.3.0(react@18.3.0))(react-is@18.3.1)(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))
       '@trenda/sanity-plugin-page-blocks':
-        specifier: 1.4.3
-        version: 1.4.3(lucide-react@0.482.0(react@18.3.0))(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(sanity@3.79.0(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.14)(@types/react@18.3.20)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))(yaml@2.7.1))
+        specifier: ^1.4.4
+        version: 1.4.4(lucide-react@0.482.0(react@18.3.0))(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(sanity@3.79.0(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.14)(@types/react@18.3.20)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))(yaml@2.7.1))
       lucide-react:
         specifier: ^0.482.0
         version: 0.482.0(react@18.3.0)
@@ -310,6 +313,9 @@ importers:
       clsx:
         specifier: 2.1.1
         version: 2.1.1
+      embla-carousel-react:
+        specifier: ^8.5.2
+        version: 8.5.2(react@19.1.0)
       lucide-react:
         specifier: ^0.482.0
         version: 0.482.0(react@19.1.0)
@@ -2902,8 +2908,8 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trenda/sanity-plugin-page-blocks@1.4.3':
-    resolution: {integrity: sha512-jN/uSJ5s7vY7SYytdUw0ujX+A/lmNdfExgC0RxcWrEkVhBxM62uwmWG3nHkGy6y5V+tVvCpI5zodWP8j/gvtKw==}
+  '@trenda/sanity-plugin-page-blocks@1.4.4':
+    resolution: {integrity: sha512-ak4kCaagzFXN4Hlc4AJ0cKN8+XJMKCYNJKLEQyT2Gpv/c8MQgvMTTUeHsJDCYRJg5czuQOll00olpZKZ9zS5xw==}
     engines: {node: '>=18'}
     peerDependencies:
       lucide-react: ^0.359.0
@@ -4038,6 +4044,24 @@ packages:
 
   electron-to-chromium@1.5.128:
     resolution: {integrity: sha512-bo1A4HH/NS522Ws0QNFIzyPcyUUNV/yyy70Ho1xqfGYzPUme2F/xr4tlEOuM6/A538U1vDA7a4XfCd1CKRegKQ==}
+
+  embla-carousel-autoplay@8.5.2:
+    resolution: {integrity: sha512-27emJ0px3q/c0kCHCjwRrEbYcyYUPfGO3g5IBWF1i7714TTzE6L9P81V6PHLoSMAKJ1aHoT2e7YFOsuFKCbyag==}
+    peerDependencies:
+      embla-carousel: 8.5.2
+
+  embla-carousel-react@8.5.2:
+    resolution: {integrity: sha512-Tmx+uY3MqseIGdwp0ScyUuxpBgx5jX1f7od4Cm5mDwg/dptEiTKf9xp6tw0lZN2VA9JbnVMl/aikmbc53c6QFA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+
+  embla-carousel-reactive-utils@8.5.2:
+    resolution: {integrity: sha512-QC8/hYSK/pEmqEdU1IO5O+XNc/Ptmmq7uCB44vKplgLKhB/l0+yvYx0+Cv0sF6Ena8Srld5vUErZkT+yTahtDg==}
+    peerDependencies:
+      embla-carousel: 8.5.2
+
+  embla-carousel@8.5.2:
+    resolution: {integrity: sha512-xQ9oVLrun/eCG/7ru3R+I5bJ7shsD8fFwLEY7yPe27/+fDHCNj0OT5EoG5ZbFyOxOcG6yTwW8oTz/dWyFnyGpg==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -10977,7 +11001,7 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trenda/sanity-plugin-page-blocks@1.4.3(lucide-react@0.482.0(react@18.3.0))(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(sanity@3.79.0(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.14)(@types/react@18.3.20)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))(yaml@2.7.1))':
+  '@trenda/sanity-plugin-page-blocks@1.4.4(lucide-react@0.482.0(react@18.3.0))(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(sanity@3.79.0(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.14)(@types/react@18.3.20)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))(yaml@2.7.1))':
     dependencies:
       '@sanity/incompatible-plugin': 1.0.5(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       lucide-react: 0.482.0(react@18.3.0)
@@ -12249,6 +12273,22 @@ snapshots:
       jake: 10.9.2
 
   electron-to-chromium@1.5.128: {}
+
+  embla-carousel-autoplay@8.5.2(embla-carousel@8.5.2):
+    dependencies:
+      embla-carousel: 8.5.2
+
+  embla-carousel-react@8.5.2(react@19.1.0):
+    dependencies:
+      embla-carousel: 8.5.2
+      embla-carousel-reactive-utils: 8.5.2(embla-carousel@8.5.2)
+      react: 19.1.0
+
+  embla-carousel-reactive-utils@8.5.2(embla-carousel@8.5.2):
+    dependencies:
+      embla-carousel: 8.5.2
+
+  embla-carousel@8.5.2: {}
 
   emoji-regex@8.0.0: {}
 
