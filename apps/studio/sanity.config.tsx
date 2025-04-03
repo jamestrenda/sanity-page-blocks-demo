@@ -115,6 +115,8 @@ export default defineConfig({
             value: 'h2',
           },
         ],
+        lists: [],
+        annotations: [],
       },
     }),
     textBlock({
