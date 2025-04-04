@@ -10,7 +10,7 @@ const imageFragment = /* groq */ `
 `
 
 const customImageFragment = /* groq */ `
-  "image": customImage.image {
+  "image": customImage.file {
     ...,
     "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),
     "blurData": asset->metadata.lqip,

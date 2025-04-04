@@ -66,6 +66,16 @@ export default defineConfig({
       },
     }),
     heroBlock({
+      groups: [
+        {
+          name: 'media',
+          title: 'Media',
+        },
+        {
+          name: 'actions',
+          title: 'Actions',
+        },
+      ],
       text: {
         styles: [
           {
@@ -93,6 +103,21 @@ export default defineConfig({
             ),
           },
         ],
+      },
+      image: {
+        validation: (Rule) => Rule.required(),
+        file: {
+          validation: (Rule) =>
+            Rule.custom((value, context) => {
+              // Check if alt text exists but image doesn't
+              const parent = context?.parent as {altText?: string}
+              if (parent?.altText && !value?.asset?._ref) {
+                return 'Image is required when alt text is provided'
+              }
+
+              return true // Validation passes
+            }),
+        },
       },
       actions: {
         internal: {
