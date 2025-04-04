@@ -13,8 +13,9 @@ type Props = BlocksType<'faqBlock'>;
 
 export const FaqBlock = ({ header, faqs }: Props) => {
   return (
-    <>
-      {Array.isArray(faqs) && faqs.length > 0 && (
+    Array.isArray(faqs) &&
+    faqs.length > 0 && (
+      <>
         <div className="rounded-md bg-zinc-100 px-6 py-8 md:py-16 lg:py-24 dark:bg-zinc-900">
           <Container className="mt-10">
             {header.text && (
@@ -43,31 +44,36 @@ export const FaqBlock = ({ header, faqs }: Props) => {
               ))}
             </Accordion>
           </Container>
-          {/* <Container className="mt-32">
+        </div>
+        <div className="py-8 md:py-16 lg:py-24">
+          <Container className="mt-10">
             {header.text && (
               <div className="*:flex *:flex-col *:gap-3">
                 <PortableText
                   value={header.text}
                   className={cn(
-                    'max-w-4xl [&_p]:max-w-3xl *:[p]:text-base *:[p]:text-balance *:[p]:md:text-lg dark:*:[p]:text-white/50',
+                    'max-w-4xl [&_.pt-overline]:dark:bg-muted! [&_p]:max-w-3xl *:[p]:text-base *:[p]:text-balance *:[p]:md:text-lg dark:*:[p]:text-white/50',
                     '',
                   )}
                 />
               </div>
             )}
-            <Accordion type="single" collapsible className="mt-10">
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {faqs.map((faq) => (
-                <AccordionItem key={faq._id} value={faq._id}>
-                  <AccordionTrigger className="text-left">
+                <div
+                  key={faq._id}
+                  className="space-y-3 rounded-md bg-zinc-100 px-6 py-8 dark:bg-zinc-900"
+                >
+                  <h3 className="text-left text-lg font-bold">
                     {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent>{faq.answer}</AccordionContent>
-                </AccordionItem>
+                  </h3>
+                  <p>{faq.answer}</p>
+                </div>
               ))}
-            </Accordion>
-          </Container> */}
+            </div>
+          </Container>
         </div>
-      )}
-    </>
+      </>
+    )
   );
 };
