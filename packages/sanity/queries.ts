@@ -127,10 +127,22 @@ const carouselBlock = /* groq */ `
   }
 `
 
+const containerBlock = /* groq */ `
+  _type == "containerBlock" || _type == "fullBleedContainerBlock" => {
+    _type,
+    _key,
+    content[] {
+      ${textBlock}
+    },
+    ${customImageFragment}
+  }
+`
+
 const blocksFragment = /* groq */ `
   _key,
   _type,
   ${carouselBlock},
+  ${containerBlock},
   ${faqBlock},
   ${heroBlock},
   ${textBlock}

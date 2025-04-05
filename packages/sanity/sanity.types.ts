@@ -218,7 +218,7 @@ export type HeroBlock = {
     _key: string
   }>
   customImage?: {
-    image?: {
+    file?: {
       asset?: {
         _ref: string
         _type: 'reference'
@@ -311,16 +311,60 @@ export type HeaderTextBlock = {
       _key: string
     }>
     style?: 'normal' | 'overline' | 'h2'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
+    listItem?: never
+    markDefs?: null
     level?: number
     _type: 'block'
     _key: string
   }>
+}
+
+export type FullBleedContainerBlock = {
+  _type: 'fullBleedContainerBlock'
+  title?: string
+  content?: Array<
+    {
+      _key: string
+    } & TextBlock
+  >
+  customImage?: {
+    file?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    altText?: string
+  }
+}
+
+export type ContainerBlock = {
+  _type: 'containerBlock'
+  title?: string
+  content?: Array<
+    {
+      _key: string
+    } & TextBlock
+  >
+  customImage?: {
+    file?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    altText?: string
+  }
 }
 
 export type CarouselBlock = {
@@ -345,6 +389,12 @@ export type Page = {
     | ({
         _key: string
       } & CarouselBlock)
+    | ({
+        _key: string
+      } & ContainerBlock)
+    | ({
+        _key: string
+      } & FullBleedContainerBlock)
     | ({
         _key: string
       } & FaqBlock)
@@ -486,6 +536,8 @@ export type AllSanitySchemaTypes =
   | HeroBlock
   | FaqBlock
   | HeaderTextBlock
+  | FullBleedContainerBlock
+  | ContainerBlock
   | CarouselBlock
   | Page
   | SanityFileAsset
@@ -500,7 +552,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ../../packages/sanity/queries.ts
 // Variable: INDEX_QUERY
-// Query: *[_id == "homeSettings"][0].homepage-> {    ...,  "slug": coalesce(slug.current, ""),  blocks[] {      _key,  _type,    _type == "carouselBlock" => {    _type,    _key,    items[] {        _type == "heroBlock" => {    _type,    _key,    text,      "image": customImage.image {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url,      action.to[0]._type == "media" => {        "url": action.to[0].link.file.asset->url,      }.url    ),    "newWindow": select(      action.to[0]._type == "external" => {        "newWindow": action.to[0].link.newWindow      },      action.to[0]._type == "media" => {        "newWindow": true      }    ).newWindow,    "download": select(      action.to[0]._type == "media" => {        "download": true      }    ).download,    "icon": action.icon,  }  }    }  },    _type == "faqBlock" => {    _type,    _key,    "header": select(        header._type == "headerTextBlock" => {    "text": header.text,  },      defined(title) => title,    ),    faqs[]-> {      _type,      _id,      question,      answer    }  },    _type == "heroBlock" => {    _type,    _key,    text,      "image": customImage.image {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url,      action.to[0]._type == "media" => {        "url": action.to[0].link.file.asset->url,      }.url    ),    "newWindow": select(      action.to[0]._type == "external" => {        "newWindow": action.to[0].link.newWindow      },      action.to[0]._type == "media" => {        "newWindow": true      }    ).newWindow,    "download": select(      action.to[0]._type == "media" => {        "download": true      }    ).download,    "icon": action.icon,  }  },    _type == "textBlock" => {      _type,  _key,  text  }  },}
+// Query: *[_id == "homeSettings"][0].homepage-> {    ...,  "slug": coalesce(slug.current, ""),  blocks[] {      _key,  _type,    _type == "carouselBlock" => {    _type,    _key,    items[] {        _type == "heroBlock" => {    _type,    _key,    text,      "image": customImage.file {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url,      action.to[0]._type == "media" => {        "url": action.to[0].link.file.asset->url,      }.url    ),    "newWindow": select(      action.to[0]._type == "external" => {        "newWindow": action.to[0].link.newWindow      },      action.to[0]._type == "media" => {        "newWindow": true      }    ).newWindow,    "download": select(      action.to[0]._type == "media" => {        "download": true      }    ).download,    "icon": action.icon,  }  }    }  },    _type == "containerBlock" || _type == "fullBleedContainerBlock" => {    _type,    _key,    content[] {        _type == "textBlock" => {      _type,  _key,  text  }    },      "image": customImage.file {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  }  },    _type == "faqBlock" => {    _type,    _key,    "header": select(        header._type == "headerTextBlock" => {    "text": header.text,  },      defined(title) => title,    ),    faqs[]-> {      _type,      _id,      question,      answer    }  },    _type == "heroBlock" => {    _type,    _key,    text,      "image": customImage.file {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url,      action.to[0]._type == "media" => {        "url": action.to[0].link.file.asset->url,      }.url    ),    "newWindow": select(      action.to[0]._type == "external" => {        "newWindow": action.to[0].link.newWindow      },      action.to[0]._type == "media" => {        "newWindow": true      }    ).newWindow,    "download": select(      action.to[0]._type == "media" => {        "download": true      }    ).download,    "icon": action.icon,  }  },    _type == "textBlock" => {      _type,  _key,  text  }  },}
 export type INDEX_QUERYResult = {
   _id: string
   _type: 'page'
@@ -561,6 +613,63 @@ export type INDEX_QUERYResult = {
       }
     | {
         _key: string
+        _type: 'containerBlock'
+        content: Array<{
+          _type: 'textBlock'
+          _key: string
+          text: Array<
+            | ({
+                _key: string
+              } & Code)
+            | {
+                children?: Array<{
+                  marks?: Array<string>
+                  text?: string
+                  _type: 'span'
+                  _key: string
+                }>
+                style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'normal' | 'overline'
+                listItem?: 'bullet' | 'number'
+                markDefs?: Array<{
+                  href?: string
+                  _type: 'link'
+                  _key: string
+                }>
+                level?: number
+                _type: 'block'
+                _key: string
+              }
+            | {
+                asset?: {
+                  _ref: string
+                  _type: 'reference'
+                  _weak?: boolean
+                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+                }
+                hotspot?: SanityImageHotspot
+                crop?: SanityImageCrop
+                _type: 'image'
+                _key: string
+              }
+          > | null
+        }> | null
+        image: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+          altText: string | 'Image-Broken'
+          blurData: string | null
+          dominantColor: string | null
+        } | null
+      }
+    | {
+        _key: string
         _type: 'faqBlock'
         header: {
           text: Array<{
@@ -571,12 +680,8 @@ export type INDEX_QUERYResult = {
               _key: string
             }>
             style?: 'h2' | 'normal' | 'overline'
-            listItem?: 'bullet' | 'number'
-            markDefs?: Array<{
-              href?: string
-              _type: 'link'
-              _key: string
-            }>
+            listItem?: never
+            markDefs?: null
             level?: number
             _type: 'block'
             _key: string
@@ -588,6 +693,63 @@ export type INDEX_QUERYResult = {
           question: string | null
           answer: string | null
         }> | null
+      }
+    | {
+        _key: string
+        _type: 'fullBleedContainerBlock'
+        content: Array<{
+          _type: 'textBlock'
+          _key: string
+          text: Array<
+            | ({
+                _key: string
+              } & Code)
+            | {
+                children?: Array<{
+                  marks?: Array<string>
+                  text?: string
+                  _type: 'span'
+                  _key: string
+                }>
+                style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'normal' | 'overline'
+                listItem?: 'bullet' | 'number'
+                markDefs?: Array<{
+                  href?: string
+                  _type: 'link'
+                  _key: string
+                }>
+                level?: number
+                _type: 'block'
+                _key: string
+              }
+            | {
+                asset?: {
+                  _ref: string
+                  _type: 'reference'
+                  _weak?: boolean
+                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+                }
+                hotspot?: SanityImageHotspot
+                crop?: SanityImageCrop
+                _type: 'image'
+                _key: string
+              }
+          > | null
+        }> | null
+        image: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+          altText: string | 'Image-Broken'
+          blurData: string | null
+          dominantColor: string | null
+        } | null
       }
     | {
         _key: string
@@ -691,7 +853,7 @@ export type INDEX_QUERYResult = {
   seoHideFromLists?: boolean
 } | null
 // Variable: PAGE_QUERY
-// Query: *[_type == "page" && slug.current == $slug][0]{    ...,  "slug": coalesce(slug.current, ""),  blocks[] {      _key,  _type,    _type == "carouselBlock" => {    _type,    _key,    items[] {        _type == "heroBlock" => {    _type,    _key,    text,      "image": customImage.image {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url,      action.to[0]._type == "media" => {        "url": action.to[0].link.file.asset->url,      }.url    ),    "newWindow": select(      action.to[0]._type == "external" => {        "newWindow": action.to[0].link.newWindow      },      action.to[0]._type == "media" => {        "newWindow": true      }    ).newWindow,    "download": select(      action.to[0]._type == "media" => {        "download": true      }    ).download,    "icon": action.icon,  }  }    }  },    _type == "faqBlock" => {    _type,    _key,    "header": select(        header._type == "headerTextBlock" => {    "text": header.text,  },      defined(title) => title,    ),    faqs[]-> {      _type,      _id,      question,      answer    }  },    _type == "heroBlock" => {    _type,    _key,    text,      "image": customImage.image {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url,      action.to[0]._type == "media" => {        "url": action.to[0].link.file.asset->url,      }.url    ),    "newWindow": select(      action.to[0]._type == "external" => {        "newWindow": action.to[0].link.newWindow      },      action.to[0]._type == "media" => {        "newWindow": true      }    ).newWindow,    "download": select(      action.to[0]._type == "media" => {        "download": true      }    ).download,    "icon": action.icon,  }  },    _type == "textBlock" => {      _type,  _key,  text  }  },}
+// Query: *[_type == "page" && slug.current == $slug][0]{    ...,  "slug": coalesce(slug.current, ""),  blocks[] {      _key,  _type,    _type == "carouselBlock" => {    _type,    _key,    items[] {        _type == "heroBlock" => {    _type,    _key,    text,      "image": customImage.file {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url,      action.to[0]._type == "media" => {        "url": action.to[0].link.file.asset->url,      }.url    ),    "newWindow": select(      action.to[0]._type == "external" => {        "newWindow": action.to[0].link.newWindow      },      action.to[0]._type == "media" => {        "newWindow": true      }    ).newWindow,    "download": select(      action.to[0]._type == "media" => {        "download": true      }    ).download,    "icon": action.icon,  }  }    }  },    _type == "containerBlock" || _type == "fullBleedContainerBlock" => {    _type,    _key,    content[] {        _type == "textBlock" => {      _type,  _key,  text  }    },      "image": customImage.file {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  }  },    _type == "faqBlock" => {    _type,    _key,    "header": select(        header._type == "headerTextBlock" => {    "text": header.text,  },      defined(title) => title,    ),    faqs[]-> {      _type,      _id,      question,      answer    }  },    _type == "heroBlock" => {    _type,    _key,    text,      "image": customImage.file {    ...,    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),    "blurData": asset->metadata.lqip,    "dominantColor": asset->metadata.palette.dominant.background,  },      actions[] {    _type,    _key,    "text": select(      defined(action.text) => {        "text": action.text,      },      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "text": action.to[0].link.document->title        }      },    ).text,    "url": select(      action.to[0]._type == "internal" => {        action.to[0].link.document->_type == "page" => {          "url":          coalesce(action.to[0].link.document->slug.current  +             select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")          )          + select(            defined(action.to[0].anchor) => '#' + action.to[0].anchor, ''          ), action.to[0].link.document->slug.current, '#')        }      }.url,      action.to[0]._type == "external" => {        "url": action.to[0].link.url,        newWindow      }.url,      action.to[0]._type == "relative" => {        "url": action.to[0].url,      }.url,      action.to[0]._type == "media" => {        "url": action.to[0].link.file.asset->url,      }.url    ),    "newWindow": select(      action.to[0]._type == "external" => {        "newWindow": action.to[0].link.newWindow      },      action.to[0]._type == "media" => {        "newWindow": true      }    ).newWindow,    "download": select(      action.to[0]._type == "media" => {        "download": true      }    ).download,    "icon": action.icon,  }  },    _type == "textBlock" => {      _type,  _key,  text  }  },}
 export type PAGE_QUERYResult = {
   _id: string
   _type: 'page'
@@ -752,6 +914,63 @@ export type PAGE_QUERYResult = {
       }
     | {
         _key: string
+        _type: 'containerBlock'
+        content: Array<{
+          _type: 'textBlock'
+          _key: string
+          text: Array<
+            | ({
+                _key: string
+              } & Code)
+            | {
+                children?: Array<{
+                  marks?: Array<string>
+                  text?: string
+                  _type: 'span'
+                  _key: string
+                }>
+                style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'normal' | 'overline'
+                listItem?: 'bullet' | 'number'
+                markDefs?: Array<{
+                  href?: string
+                  _type: 'link'
+                  _key: string
+                }>
+                level?: number
+                _type: 'block'
+                _key: string
+              }
+            | {
+                asset?: {
+                  _ref: string
+                  _type: 'reference'
+                  _weak?: boolean
+                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+                }
+                hotspot?: SanityImageHotspot
+                crop?: SanityImageCrop
+                _type: 'image'
+                _key: string
+              }
+          > | null
+        }> | null
+        image: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+          altText: string | 'Image-Broken'
+          blurData: string | null
+          dominantColor: string | null
+        } | null
+      }
+    | {
+        _key: string
         _type: 'faqBlock'
         header: {
           text: Array<{
@@ -762,12 +981,8 @@ export type PAGE_QUERYResult = {
               _key: string
             }>
             style?: 'h2' | 'normal' | 'overline'
-            listItem?: 'bullet' | 'number'
-            markDefs?: Array<{
-              href?: string
-              _type: 'link'
-              _key: string
-            }>
+            listItem?: never
+            markDefs?: null
             level?: number
             _type: 'block'
             _key: string
@@ -779,6 +994,63 @@ export type PAGE_QUERYResult = {
           question: string | null
           answer: string | null
         }> | null
+      }
+    | {
+        _key: string
+        _type: 'fullBleedContainerBlock'
+        content: Array<{
+          _type: 'textBlock'
+          _key: string
+          text: Array<
+            | ({
+                _key: string
+              } & Code)
+            | {
+                children?: Array<{
+                  marks?: Array<string>
+                  text?: string
+                  _type: 'span'
+                  _key: string
+                }>
+                style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'normal' | 'overline'
+                listItem?: 'bullet' | 'number'
+                markDefs?: Array<{
+                  href?: string
+                  _type: 'link'
+                  _key: string
+                }>
+                level?: number
+                _type: 'block'
+                _key: string
+              }
+            | {
+                asset?: {
+                  _ref: string
+                  _type: 'reference'
+                  _weak?: boolean
+                  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+                }
+                hotspot?: SanityImageHotspot
+                crop?: SanityImageCrop
+                _type: 'image'
+                _key: string
+              }
+          > | null
+        }> | null
+        image: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+          altText: string | 'Image-Broken'
+          blurData: string | null
+          dominantColor: string | null
+        } | null
       }
     | {
         _key: string
@@ -963,8 +1235,8 @@ export type HEADER_MENU_QUERYResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_id == "homeSettings"][0].homepage-> {\n  \n  ...,\n  "slug": coalesce(slug.current, ""),\n  blocks[] {\n    \n  _key,\n  _type,\n  \n  _type == "carouselBlock" => {\n    _type,\n    _key,\n    items[] {\n      \n  _type == "heroBlock" => {\n    _type,\n    _key,\n    text,\n    \n  "image": customImage.image {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n  }\n\n    }\n  }\n,\n  \n  _type == "faqBlock" => {\n    _type,\n    _key,\n    "header": select(\n      \n  header._type == "headerTextBlock" => {\n    "text": header.text,\n  }\n,\n      defined(title) => title,\n    ),\n    faqs[]-> {\n      _type,\n      _id,\n      question,\n      answer\n    }\n  }\n,\n  \n  _type == "heroBlock" => {\n    _type,\n    _key,\n    text,\n    \n  "image": customImage.image {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n  }\n,\n  \n  _type == "textBlock" => {\n    \n  _type,\n  _key,\n  text\n\n  }\n\n\n  },\n\n}': INDEX_QUERYResult
-    '*[_type == "page" && slug.current == $slug][0]{\n  \n  ...,\n  "slug": coalesce(slug.current, ""),\n  blocks[] {\n    \n  _key,\n  _type,\n  \n  _type == "carouselBlock" => {\n    _type,\n    _key,\n    items[] {\n      \n  _type == "heroBlock" => {\n    _type,\n    _key,\n    text,\n    \n  "image": customImage.image {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n  }\n\n    }\n  }\n,\n  \n  _type == "faqBlock" => {\n    _type,\n    _key,\n    "header": select(\n      \n  header._type == "headerTextBlock" => {\n    "text": header.text,\n  }\n,\n      defined(title) => title,\n    ),\n    faqs[]-> {\n      _type,\n      _id,\n      question,\n      answer\n    }\n  }\n,\n  \n  _type == "heroBlock" => {\n    _type,\n    _key,\n    text,\n    \n  "image": customImage.image {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n  }\n,\n  \n  _type == "textBlock" => {\n    \n  _type,\n  _key,\n  text\n\n  }\n\n\n  },\n\n}': PAGE_QUERYResult
+    '*[_id == "homeSettings"][0].homepage-> {\n  \n  ...,\n  "slug": coalesce(slug.current, ""),\n  blocks[] {\n    \n  _key,\n  _type,\n  \n  _type == "carouselBlock" => {\n    _type,\n    _key,\n    items[] {\n      \n  _type == "heroBlock" => {\n    _type,\n    _key,\n    text,\n    \n  "image": customImage.file {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n  }\n\n    }\n  }\n,\n  \n  _type == "containerBlock" || _type == "fullBleedContainerBlock" => {\n    _type,\n    _key,\n    content[] {\n      \n  _type == "textBlock" => {\n    \n  _type,\n  _key,\n  text\n\n  }\n\n    },\n    \n  "image": customImage.file {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n\n  }\n,\n  \n  _type == "faqBlock" => {\n    _type,\n    _key,\n    "header": select(\n      \n  header._type == "headerTextBlock" => {\n    "text": header.text,\n  }\n,\n      defined(title) => title,\n    ),\n    faqs[]-> {\n      _type,\n      _id,\n      question,\n      answer\n    }\n  }\n,\n  \n  _type == "heroBlock" => {\n    _type,\n    _key,\n    text,\n    \n  "image": customImage.file {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n  }\n,\n  \n  _type == "textBlock" => {\n    \n  _type,\n  _key,\n  text\n\n  }\n\n\n  },\n\n}': INDEX_QUERYResult
+    '*[_type == "page" && slug.current == $slug][0]{\n  \n  ...,\n  "slug": coalesce(slug.current, ""),\n  blocks[] {\n    \n  _key,\n  _type,\n  \n  _type == "carouselBlock" => {\n    _type,\n    _key,\n    items[] {\n      \n  _type == "heroBlock" => {\n    _type,\n    _key,\n    text,\n    \n  "image": customImage.file {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n  }\n\n    }\n  }\n,\n  \n  _type == "containerBlock" || _type == "fullBleedContainerBlock" => {\n    _type,\n    _key,\n    content[] {\n      \n  _type == "textBlock" => {\n    \n  _type,\n  _key,\n  text\n\n  }\n\n    },\n    \n  "image": customImage.file {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n\n  }\n,\n  \n  _type == "faqBlock" => {\n    _type,\n    _key,\n    "header": select(\n      \n  header._type == "headerTextBlock" => {\n    "text": header.text,\n  }\n,\n      defined(title) => title,\n    ),\n    faqs[]-> {\n      _type,\n      _id,\n      question,\n      answer\n    }\n  }\n,\n  \n  _type == "heroBlock" => {\n    _type,\n    _key,\n    text,\n    \n  "image": customImage.file {\n    ...,\n    "altText": coalesce(^.customImage.altText, asset->altText, asset->originalFilename, "Image-Broken"),\n    "blurData": asset->metadata.lqip,\n    "dominantColor": asset->metadata.palette.dominant.background,\n  }\n,\n    \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n  }\n,\n  \n  _type == "textBlock" => {\n    \n  _type,\n  _key,\n  text\n\n  }\n\n\n  },\n\n}': PAGE_QUERYResult
     '\n  *[_type == "page" && defined(slug.current)].slug.current\n': PAGE_PATHS_QUERYResult
     '{\n  "general": *[_id == "generalSettings"][0] {\n    _id,\n    _type,\n    repo,\n    headerMenu-> {\n      _id,\n      _type,\n      \n  actions[] {\n    _type,\n    _key,\n    "text": select(\n      defined(action.text) => {\n        "text": action.text,\n      },\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "text": action.to[0].link.document->title\n        }\n      },\n    ).text,\n    "url": select(\n      action.to[0]._type == "internal" => {\n        action.to[0].link.document->_type == "page" => {\n          "url":\n          coalesce(action.to[0].link.document->slug.current  + \n            select(defined(action.to[0].params) => "?" + array::join(action.to[0].params[]{"param": key + "=" + value}.param, "&")\n          )\n          + select(\n            defined(action.to[0].anchor) => \'#\' + action.to[0].anchor, \'\'\n          ), action.to[0].link.document->slug.current, \'#\')\n        }\n      }.url,\n      action.to[0]._type == "external" => {\n        "url": action.to[0].link.url,\n        newWindow\n      }.url,\n      action.to[0]._type == "relative" => {\n        "url": action.to[0].url,\n      }.url,\n      action.to[0]._type == "media" => {\n        "url": action.to[0].link.file.asset->url,\n      }.url\n    ),\n    "newWindow": select(\n      action.to[0]._type == "external" => {\n        "newWindow": action.to[0].link.newWindow\n      },\n      action.to[0]._type == "media" => {\n        "newWindow": true\n      }\n    ).newWindow,\n    "download": select(\n      action.to[0]._type == "media" => {\n        "download": true\n      }\n    ).download,\n    "icon": action.icon,\n  }\n\n    }\n  }\n}': SETTINGS_QUERYResult
     '*[_id == "generalSettings" && defined(headerMenu)][0].headerMenu-> {\n    _id,\n    _type,\n    const,\n    actions[] {\n      _type,\n      _key,\n      "text": select(\n        defined(text) => {\n          "text": text,\n        },\n        to[0]._type == "internal" => {\n          to[0].link.document->_type == "page" => {\n            "text": to[0].link.document->title\n          }\n        },\n      ).text,\n      "url": select(\n        to[0]._type == "internal" => {\n          to[0].link.document->_type == "page" => {\n            "url":\n            coalesce(to[0].link.document->slug.current  + \n              select(defined(to[0].params) => "?" + array::join(to[0].params[]{"param": key + "=" + value}.param, "&")\n            )\n            + select(\n              defined(to[0].anchor) => \'#\' + to[0].anchor, \'\'\n            ), to[0].link.document->slug.current, \'#\')\n          }\n        }.url,\n        to[0]._type == "external" => {\n          "url": to[0].link.url,\n          newWindow\n        }.url,\n        to[0]._type == "relative" => {\n          "url": to[0].url,\n        }.url,\n        to[0]._type == "media" => {\n          "url": to[0].link.file.asset->url,\n        }.url\n      ),\n      "newWindow": select(\n        to[0]._type == "external" => {\n          "newWindow": to[0].link.newWindow\n        },\n        to[0]._type == "media" => {\n          "newWindow": true\n        }\n      ).newWindow,\n    }\n  }\n': HEADER_MENU_QUERYResult

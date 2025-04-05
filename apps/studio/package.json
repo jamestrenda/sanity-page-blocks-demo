@@ -22,7 +22,7 @@
     "@sanity/code-input": "^5.1.2",
     "@sanity/ui": "^2.15.7",
     "@sanity/vision": "3.79.0",
-    "@trenda/sanity-plugin-page-blocks": "^1.4.5",
+    "@trenda/sanity-plugin-page-blocks": "^1.4.6",
     "lucide-react": "^0.482.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",

@@ -7,7 +7,9 @@ import { INDEX_QUERYResult } from '@repo/sanity/sanity.types';
 import { BlocksType } from '@repo/sanity/types';
 import { dataset, projectId, studioUrl } from '../../lib/sanity/api';
 import { CarouselBlock } from './carousel';
+import { ContainerBlock } from './containerBlock';
 import { FaqBlock } from './faqBlock';
+import { FullBleedContainerBlock } from './fullBleedContainerBlock';
 import { Hero } from './hero';
 import { TextBlock } from './text-block';
 
@@ -15,8 +17,8 @@ type Block = NonNullable<NonNullable<INDEX_QUERYResult>['blocks']>[number];
 
 export type Props = {
   blocks: Block[];
-  _id: string;
-  _type: string;
+  _id?: string;
+  _type?: string;
 };
 
 type PageData = {
@@ -27,6 +29,8 @@ type PageData = {
 
 const BLOCK_COMPONENTS = {
   carouselBlock: CarouselBlock,
+  containerBlock: ContainerBlock,
+  fullBleedContainerBlock: FullBleedContainerBlock,
   faqBlock: FaqBlock,
   heroBlock: Hero,
   textBlock: TextBlock,
@@ -38,8 +42,10 @@ export function Blocks({ blocks: initial = [], _id, _type }: Props) {
   const blocks = useOptimistic<Block[], SanityDocument<PageData>>(
     initial,
     (currentBlocks, action) => {
-      if (action.id === _id && action.document.blocks) {
-        return action.document.blocks;
+      if (_id) {
+        if (action.id === _id && action.document.blocks) {
+          return action.document.blocks;
+        }
       }
 
       return currentBlocks;
@@ -49,14 +55,18 @@ export function Blocks({ blocks: initial = [], _id, _type }: Props) {
   return (
     <div
       className="blocks space-y-8 md:space-y-14"
-      data-sanity={createDataAttribute({
-        id: _id,
-        baseUrl: studioUrl,
-        projectId: projectId,
-        dataset: dataset,
-        type: _type,
-        path: 'blocks',
-      }).toString()}
+      data-sanity={
+        _id && _type
+          ? createDataAttribute({
+              id: _id,
+              baseUrl: studioUrl,
+              projectId: projectId,
+              dataset: dataset,
+              type: _type,
+              path: 'blocks',
+            }).toString()
+          : undefined
+      }
     >
       {blocks.map((block) => {
         const Component = BLOCK_COMPONENTS[block._type] as ComponentType<
@@ -76,15 +86,20 @@ export function Blocks({ blocks: initial = [], _id, _type }: Props) {
 
         return (
           <div
+            className="peer group"
             key={`${block._type}-${block._key}`}
-            data-sanity={createDataAttribute({
-              id: _id,
-              baseUrl: studioUrl,
-              projectId: projectId,
-              dataset: dataset,
-              type: _type,
-              path: `blocks[_key=="${block._key}"]`,
-            }).toString()}
+            data-sanity={
+              _id && _type
+                ? createDataAttribute({
+                    id: _id,
+                    baseUrl: studioUrl,
+                    projectId: projectId,
+                    dataset: dataset,
+                    type: _type,
+                    path: `blocks[_key=="${block._key}"]`,
+                  }).toString()
+                : undefined
+            }
           >
             <Component {...block} />
           </div>
