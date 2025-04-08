@@ -6,6 +6,7 @@ import type { ComponentType } from 'react';
 import { INDEX_QUERYResult } from '@repo/sanity/sanity.types';
 import { BlocksType } from '@repo/sanity/types';
 import { dataset, projectId, studioUrl } from '../../lib/sanity/api';
+import { CallToActionBlock } from './callToActionBlock';
 import { CarouselBlock } from './carousel';
 import { ContainerBlock } from './containerBlock';
 import { FaqBlock } from './faqBlock';
@@ -28,6 +29,7 @@ type PageData = {
 };
 
 const BLOCK_COMPONENTS = {
+  callToActionBlock: CallToActionBlock,
   carouselBlock: CarouselBlock,
   containerBlock: ContainerBlock,
   fullBleedContainerBlock: FullBleedContainerBlock,

@@ -72,6 +72,16 @@ const actionsFragment = /* groq */ `
   }
 `
 
+const callToActionBlock = /* groq */ `
+  _type == "callToActionBlock" => {
+    _type,
+    _key,
+    text,
+    ${customImageFragment},
+    ${actionsFragment}
+  }
+`
+
 const heroBlock = /* groq */ `
   _type == "heroBlock" => {
     _type,
@@ -141,6 +151,7 @@ const containerBlock = /* groq */ `
 const blocksFragment = /* groq */ `
   _key,
   _type,
+  ${callToActionBlock},
   ${carouselBlock},
   ${containerBlock},
   ${faqBlock},

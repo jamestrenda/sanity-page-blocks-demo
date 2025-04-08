@@ -1,4 +1,4 @@
-import {FileIcon} from 'lucide-react'
+import {FileIcon, RatioIcon} from 'lucide-react'
 import {defineField, defineType} from 'sanity'
 import {seoFields} from './seoFields'
 import {GROUPS} from '../lib/constants'
@@ -32,9 +32,14 @@ export const page = defineType({
       title: 'Blocks',
       type: 'array',
       of: [
+        {type: 'callToActionBlock'},
         {type: 'carouselBlock'},
         {type: 'containerBlock'},
-        {type: 'fullBleedContainerBlock', title: 'Full Bleed Container'},
+        {
+          type: 'fullBleedContainerBlock',
+          title: 'Full Bleed Container',
+          icon: () => <RatioIcon size="1em" />,
+        },
         {type: 'faqBlock'},
         {type: 'heroBlock'},
         {type: 'textBlock'},

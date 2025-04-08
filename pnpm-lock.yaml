@@ -151,8 +151,8 @@ importers:
         specifier: 3.79.0
         version: 3.79.0(@babel/runtime@7.27.0)(@codemirror/lint@6.8.5)(@codemirror/theme-one-dark@6.1.2)(@emotion/is-prop-valid@1.2.2)(codemirror@6.0.1)(react-dom@18.3.0(react@18.3.0))(react-is@18.3.1)(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))
       '@trenda/sanity-plugin-page-blocks':
-        specifier: ^1.4.6
-        version: 1.4.6(lucide-react@0.482.0(react@18.3.0))(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(sanity@3.79.0(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.14)(@types/react@18.3.20)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))(yaml@2.7.1))
+        specifier: ^1.4.8
+        version: 1.4.8(lucide-react@0.482.0(react@18.3.0))(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(sanity@3.79.0(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.14)(@types/react@18.3.20)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))(yaml@2.7.1))
       lucide-react:
         specifier: ^0.482.0
         version: 0.482.0(react@18.3.0)
@@ -2937,8 +2937,8 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trenda/sanity-plugin-page-blocks@1.4.6':
-    resolution: {integrity: sha512-5g5224zC8GoMNApMmHQ8D6o/oMrBGLLDtJbM7obYvqd18xi2/dptLxclhCPpJeWhYiHBOFtuwUNBrnajgGc9bQ==}
+  '@trenda/sanity-plugin-page-blocks@1.4.8':
+    resolution: {integrity: sha512-AHA07ROp4PPZ+UD8HnbiTMEgKtqWMg7gDfTsNuFK57E/HbmpEwm9EBOgU5f+d1zOu+HCDHF+ikbGflptPjC+Mg==}
     engines: {node: '>=18'}
     peerDependencies:
       lucide-react: ^0.359.0
@@ -11063,7 +11063,7 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trenda/sanity-plugin-page-blocks@1.4.6(lucide-react@0.482.0(react@18.3.0))(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(sanity@3.79.0(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.14)(@types/react@18.3.20)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))(yaml@2.7.1))':
+  '@trenda/sanity-plugin-page-blocks@1.4.8(lucide-react@0.482.0(react@18.3.0))(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(sanity@3.79.0(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.14)(@types/react@18.3.20)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(styled-components@6.1.16(react-dom@18.3.0(react@18.3.0))(react@18.3.0))(yaml@2.7.1))':
     dependencies:
       '@sanity/incompatible-plugin': 1.0.5(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       lucide-react: 0.482.0(react@18.3.0)

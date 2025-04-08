@@ -1,4 +1,5 @@
 import {
+  callToActionBlock,
   carouselBlock,
   containerBlock,
   faqBlock,
@@ -12,6 +13,7 @@ import {iconField} from '../schemaTypes/iconField'
 import {RatioIcon} from 'lucide-react'
 
 export const blocks = [
+  callToActionBlock(),
   carouselBlock({
     items: {
       of: [
