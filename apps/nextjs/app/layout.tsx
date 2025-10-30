@@ -1,7 +1,7 @@
 import '@repo/ui/styles.css';
 
 import { cn } from '@repo/utils';
-import { VisualEditing } from 'next-sanity';
+import { VisualEditing } from 'next-sanity/visual-editing';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { draftMode } from 'next/headers';
